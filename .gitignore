@@ -1,0 +1,9 @@
+# Ignorar pastas geradas pelo Python
+__pycache__/
+*.py[cod]
+
+# Ignorar configurações do próprio VS Code
+.vscode/
+
+# Ignorar arquivos temporários do Windows
+Thumbs.db
