@@ -1,3 +1,4 @@
 {
-    "workbench.editor.preferHistoryBasedLanguageDetection": true
+    "workbench.editor.preferHistoryBasedLanguageDetection": true,
+    "python-envs.defaultEnvManager": "ms-python.python:system"
 }
