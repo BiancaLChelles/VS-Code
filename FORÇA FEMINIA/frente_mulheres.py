@@ -1,7 +1,9 @@
 import customtkinter as ctk
 import sqlite3
 from tkinter import messagebox
-
+import subprocess # Adicionado para rodar o outro script
+import sys        # Adicionado para identificar o interpretador Python
+import alimentacao_bancodemulheres  # Isso importa o seu outro script
 # Configuração de estilo
 ctk.set_appearance_mode("dark")
 ctk.set_default_color_theme("blue")
@@ -12,7 +14,7 @@ class SistemaMemoria(ctk.CTk):
 
         # Configurações da Janela Principal
         self.title("Dicionário de Memória")
-        self.geometry("700x500")
+        self.geometry("700x550") # Aumentei um pouco a altura para caber o novo botão
 
         self.configurar_banco()
 
@@ -20,15 +22,29 @@ class SistemaMemoria(ctk.CTk):
         self.label_titulo = ctk.CTkLabel(self, text="Arquivo de Memória e Força Feminina", font=("Roboto", 24, "bold"))
         self.label_titulo.pack(pady=20)
 
+        # --- Frame de Ações Superiores ---
+        self.frame_acoes = ctk.CTkFrame(self, fg_color="transparent")
+        self.frame_acoes.pack(pady=10)
+
         # --- Botão para Abrir Cadastro ---
         self.btn_abrir_cadastro = ctk.CTkButton(
-            self, 
+            self.frame_acoes, 
             text="+ Adicionar Nova Personalidade", 
-            fg_color="#2E8B57", 
-            hover_color="#1E5D3A",
+            fg_color="#58A7D4", 
+            hover_color="#3777A1",
             command=self.abrir_janela_cadastro
         )
-        self.btn_abrir_cadastro.pack(pady=10)
+        self.btn_abrir_cadastro.grid(row=0, column=0, padx=10)
+
+        # --- NOVO BOTÃO: Memória Prévia ---
+        self.btn_memoria_previa = ctk.CTkButton(
+            self.frame_acoes, 
+            text="Adicionar Personalidades Famosas", 
+            fg_color="#58A7D4", 
+            hover_color="#3777A1",
+            command=self.rodar_alimentacao
+        )
+        self.btn_memoria_previa.grid(row=0, column=1, padx=10)
 
         # --- Frame de Filtros ---
         self.frame_filtros = ctk.CTkFrame(self)
@@ -46,6 +62,21 @@ class SistemaMemoria(ctk.CTk):
         # --- Área de Exibição ---
         self.texto_resultado = ctk.CTkTextbox(self, width=650, height=250, font=("Consolas", 12))
         self.texto_resultado.pack(pady=20, padx=20)
+
+    # Função para rodar o programa externo
+    # Altere apenas a função rodar_alimentacao no seu código:
+    def rodar_alimentacao(self):
+        try:
+            # Em vez de abrir um novo processo, chamamos a função principal dele
+            # Assumindo que o código de alimentação roda quando importado 
+            # ou tem uma função principal.
+            import importlib
+            importlib.reload(alimentacao_bancodemulheres) 
+            
+            messagebox.showinfo("Sucesso", "Memória prévia alimentada com sucesso!")
+            self.listar_todas() # Atualiza a tela na hora para você ver os dados
+        except Exception as e:
+            messagebox.showerror("Erro", f"Não foi possível carregar a memória: {e}")
 
     def abrir_janela_cadastro(self):
         # Cria uma nova janela (Toplevel)
@@ -66,8 +97,8 @@ class SistemaMemoria(ctk.CTk):
         self.entry_idade = ctk.CTkEntry(self.janela_cad, placeholder_text="Idade do Feito", width=350)
         self.entry_idade.pack(pady=5)
 
-        self.check_autista = ctk.CTkCheckBox(self.janela_cad, text="É Autista?")
-        self.check_autista.pack(pady=10)
+        self.check_artista = ctk.CTkCheckBox(self.janela_cad, text="É Autista?")
+        self.check_artista.pack(pady=10)
 
         self.entry_desc = ctk.CTkTextbox(self.janela_cad, width=350, height=100)
         self.entry_desc.pack(pady=5)
@@ -94,7 +125,7 @@ class SistemaMemoria(ctk.CTk):
     def salvar_mulher(self):
         nome = self.entry_nome.get()
         area = self.entry_area.get()
-        autista = 1 if self.check_autista.get() else 0
+        autista = 1 if self.check_artista.get() else 0
         idade = self.entry_idade.get()
         # Pegando texto do CTkTextbox (da linha 1 caractere 0 até o fim)
         desc = self.entry_desc.get("1.0", "end-1c")
