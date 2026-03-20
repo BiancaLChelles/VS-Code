@@ -78,10 +78,10 @@ def exibir_interface_manejo(diag, expl, instr, frase):
 
     # 1. CRIAR A ESTRUTURA INICIAL
     janela_res = ctk.CTkToplevel()
-    janela_res.title("SMART ATIPIC | Central de Manejo")
+    janela_res.title("SMARS | Central de Manejo")
     
     # Ajustei a geometria inicial para permitir o crescimento vertical (scroll)
-    janela_res.geometry("600x700") 
+    janela_res.geometry("600x600") 
     janela_res.configure(fg_color="#0B0D14")
     janela_res.attributes("-topmost", True)
     
@@ -99,7 +99,7 @@ def exibir_interface_manejo(diag, expl, instr, frase):
         scroll_main.pack(fill="both", expand=True, padx=5, pady=5)
 
         # Cabeçalho de Telemetria
-        ctk.CTkLabel(scroll_main, text="SMART ATIPIC // TELEMETRIA", 
+        ctk.CTkLabel(scroll_main, text="Sistema de Manejo de Alexitimia e Reeducação Sentimental", 
                      font=("Segoe UI", 10, "bold"), text_color=cor_acento).pack(pady=(20,0), padx=30, anchor="w")
         
         # Título do Diagnóstico (Usa wraplength para não fugir da tela)
@@ -113,7 +113,7 @@ def exibir_interface_manejo(diag, expl, instr, frase):
 
         # SEÇÃO: ANÁLISE TÉCNICA
         ctk.CTkLabel(card, text="ANÁLISE TÉCNICA", font=("Segoe UI", 10, "bold"), 
-                     text_color="#64748B").pack(pady=(20,0), padx=25, anchor="w")
+                     text_color="#64748B",wraplength=480, justify="left").pack(pady=(20,0), padx=25, anchor="w")
         
         lbl_expl = ctk.CTkLabel(card, text=expl, font=("Segoe UI", 13), text_color="#CBD5E1", 
                                 wraplength=480, justify="left")
@@ -124,7 +124,7 @@ def exibir_interface_manejo(diag, expl, instr, frase):
 
         # SEÇÃO: INSTRUÇÕES DE MANEJO
         ctk.CTkLabel(card, text="INSTRUÇÕES / PROTOCOLO", font=("Segoe UI", 10, "bold"), 
-                     text_color=cor_acento).pack(pady=(10,0), padx=25, anchor="w")
+                     text_color=cor_acento ,wraplength=480, justify="left").pack(pady=(10,0), padx=25, anchor="w")
         
         lbl_instr = ctk.CTkLabel(card, text=instr, font=("Segoe UI Semibold", 15), text_color="#FFFFFF", 
                                  wraplength=480, justify="left")
@@ -133,10 +133,10 @@ def exibir_interface_manejo(diag, expl, instr, frase):
         # SEÇÃO: FRASE / LOG
         if frase:
             ctk.CTkLabel(card, text=f"LOG: {frase}", font=("Consolas", 14, "italic"), 
-                         text_color="#3474CE").pack(pady=(0, 20), padx=25, anchor="w")
+                         text_color="#3474CE",wraplength=480, justify="left").pack(pady=(0, 20), padx=25, anchor="w")
 
         # Botão de Estabilização (Fixo no final do scroll)
-        ctk.CTkButton(scroll_main, text="ESTABILIZAR SISTEMA", command=janela_res.destroy, 
+        ctk.CTkButton(scroll_main, text="FINALIZAR", command=janela_res.destroy, 
                       font=("Segoe UI", 13, "bold"), fg_color=cor_acento, 
                       hover_color="#3730A3", height=50, corner_radius=12).pack(pady=30, padx=30, fill="x")
 
@@ -163,7 +163,7 @@ def processar_final(entrada_usuario, tipo_fluxo):
         # --- CAMINHO A: IDENTIFICAÇÃO DIRETA ---
         if tipo_fluxo == "direto":
             sentimento_final = entrada_usuario
-            int_input = ctk.CTkInputDialog(text="Intensidade (1 a 10):", title="TELEMETRIA").get_input()
+            int_input = ctk.CTkInputDialog(text="Intensidade (1 a 10):", title="INTENSIDADE").get_input()
             
             intensidade = 5 # Valor padrão caso o input seja cancelado
             if int_input and int_input.isdigit():

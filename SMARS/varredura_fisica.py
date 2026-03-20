@@ -84,7 +84,7 @@ def tradutor_fisico(texto_usuario):
         ["quero saber", "como funciona", "interessado", "pesquisando", "instigado", "descobrir", "investigando", "cacador de dados", "fome de saber", "explorando", "mente aberta", "busca de padrao"],
        
         "STIMMING (AUTORREGULAÇÃO)": 
-        ["balancando", "girando", "maos balancando", "flapping", "pulando", "batendo o pe", "mexendo no cabelo", "mordendo a caneta", "preciso me mexer", "corpo pedindo ritmo", "balanco", "sacudindo", "esfregando as maos", "vocalizando", "apertando as maos", "balancar de cabeca", "necessidade de pressao", "andando sem parar", "estalando os dedos", "morder os labios", "balancar o tronco", "pressao profunda", "apertar objetos"],
+        ["balancando", "maos agitadas", "girando", "maos balancando", "flapping", "pulando", "batendo o pe", "mexendo no cabelo", "mordendo a caneta", "preciso me mexer", "corpo pedindo ritmo", "balanco", "sacudindo", "esfregando as maos", "vocalizando", "apertando as maos", "balancar de cabeca", "necessidade de pressao", "andando sem parar", "estalando os dedos", "morder os labios", "balancar o tronco", "pressao profunda", "apertar objetos"],
        
         "FRUSTRAÇÃO": 
         ["nao funcionou", "erro 404", "deu errado", "vontade de desistir", "irritado com erro", "output invalido", "travado no problema", "indignado", "insucesso", "impaciencia", "frustrado", "falha no codigo", "expectativa quebrada", "nao sai do lugar", "vontade de largar tudo"],

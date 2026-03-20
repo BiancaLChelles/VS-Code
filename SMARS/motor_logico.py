@@ -95,8 +95,8 @@ def obter_relatorio(cat_match, intensidade, hora_atual_str):
         if intensidade >= 6: 
             return ("Agitação Sensorial Crítica.", 
                     "O ambiente está enviando dados demais e o sistema está superaquecendo.", 
-                    "Use fones de ouvido ou mude para um lugar silencioso e escuro IMEDIATAMENTE.", 
-                    "Se o excesso de sons questiona o sistema, silenciar é a melhor resposta.")
+                    "Use atividades corporais para liberar esta energia acumulada que esta querendo sair.\nOU\nMude para um lugar silencioso e escuro imediatamente, e aguarde seu sistema se estabilizar.", 
+                    "Se o excesso de estimulos sobregarrega, descarregar (da forma que preferir) pode ser a melhor resposta.")
         else: 
             return ("Agitação Moderada / Falha no Filtro.", 
                     "O hardware está dando prioridade máxima para ruídos ou estímulos irrelevantes.", 
