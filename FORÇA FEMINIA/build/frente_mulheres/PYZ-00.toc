@@ -44,10 +44,6 @@
    'C:\\Program '
    'Files\\WindowsApps\\PythonSoftwareFoundation.Python.3.13_3.13.3312.0_x64__qbz5n2kfra8p0\\Lib\\_threading_local.py',
    'PYMODULE'),
-  ('alimentacao_bancodemulheres',
-   'C:\\Users\\Bianc\\OneDrive\\Área de Trabalho\\VS Code\\FORÇA '
-   'FEMINIA\\alimentacao_bancodemulheres.py',
-   'PYMODULE'),
   ('argparse',
    'C:\\Program '
    'Files\\WindowsApps\\PythonSoftwareFoundation.Python.3.13_3.13.3312.0_x64__qbz5n2kfra8p0\\Lib\\argparse.py',
