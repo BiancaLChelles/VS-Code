@@ -110,7 +110,7 @@ print("Monitor de hiperfoco ativo e operando em segundo plano...")
 
 while True:
     # 2 horas = 7200 segundos
-    tempo_de_espera = 2
+    tempo_de_espera = 7200
     
     time.sleep(tempo_de_espera)
     disparar_alerta()
