@@ -1,0 +1,240 @@
+{
+    "medo": [
+        "medo",
+        "assustado",
+        "receio",
+        "ameaca",
+        "frio na barriga",
+        "vigilante"
+    ],
+    "hiperfoco": [
+        "hiperfoco",
+        "focado",
+        "obcecado",
+        "nao consigo parar",
+        "eletrizado"
+    ],
+    "looping": [
+        "ruminacao",
+        "looping",
+        "mente presa",
+        "repetitivo",
+        "frase na cabeca",
+        "ecolalia"
+    ],
+    "shutdown": [
+        "shutdown",
+        "olhar morto",
+        "olhar fixo",
+        "travado",
+        "desligado"
+    ],
+    "tristeza": [
+        "triste",
+        "angustia",
+        "no na garganta",
+        "vontade de chorar",
+        "choro preso"
+    ],
+    "ansiedade": [
+        "ansiedade",
+        "peito apertado",
+        "coracao acelerado",
+        "falta de ar",
+        "tremendo",
+        "panico"
+    ],
+    "sensorial": [
+        "barulho",
+        "luz",
+        "agitacao sensorial",
+        "muito som",
+        "etiqueta incomodando",
+        "meltdown",
+        "sobrecarga"
+    ],
+    "verbal": [
+        "nao verbal",
+        "mudo",
+        "sem fala",
+        "nao consigo falar"
+    ],
+    "inercia": [
+        "inercia",
+        "nao consigo comecar",
+        "preso no sofa",
+        "muro invisivel"
+    ],
+    "fome": [
+        "fome",
+        "estomago vazio",
+        "estomago roncando",
+        "fraco",
+        "querendo comer"
+    ],
+    "sede": [
+        "sede",
+        "agua",
+        "boca seca",
+        "garganta seca"
+    ],
+    "cansaco": [
+        "cansado",
+        "exausto",
+        "energia baixa",
+        "bateria fraca",
+        "sono",
+        "exaustao"
+    ],
+    "injustica": [
+        "injustica",
+        "errado",
+        "mentira",
+        "falta de logica",
+        "revoltado",
+        "angustia etica"
+    ],
+    "rejeicao": [
+        "rsd",
+        "ele me odeia",
+        "rejeitado",
+        "excluido",
+        "mico",
+        "vergonha"
+    ],
+    "empolgada": [
+        "empolgado",
+        "animado",
+        "dopamina",
+        "uhu",
+        "venci",
+        "empolgacao"
+    ],
+    "paz": [
+        "paz",
+        "calma",
+        "tranquilo",
+        "zen",
+        "sereno",
+        "leve"
+    ],
+    "conexao": [
+        "conexao",
+        "compreendido",
+        "acolhido",
+        "amado",
+        "presenca"
+    ],
+    "alivio": [
+        "alivio",
+        "tirei um peso",
+        "ufa",
+        "concluido"
+    ],
+    "dissociacao": [
+        "fora do corpo",
+        "nevoeiro",
+        "nuvem",
+        "distante",
+        "mundo de vidro",
+        "dissociacao"
+    ],
+    "burnout": [
+        "esgotamento",
+        "fim da linha",
+        "acabou a bateria",
+        "morto por dentro",
+        "burnout"
+    ],
+    "afeto": [
+        "coracao quente",
+        "borboletas no estomago",
+        "carinho",
+        "ternura",
+        "afeto"
+    ],
+    "raiva": [
+        "odio",
+        "mandibula presa",
+        "punhos fechados",
+        "querendo gritar",
+        "raiva"
+    ],
+    "confusao": [
+        "nao entendi",
+        "cerebro frito",
+        "perdido",
+        "muita coisa",
+        "confusao"
+    ],
+    "frustracao": [
+        "nao da certo",
+        "estagnado",
+        "impotente",
+        "desisto",
+        "frustracao"
+    ],
+    "solidao": [
+        "sozinho",
+        "isolado",
+        "vazio",
+        "invisivel",
+        "solidao"
+    ],
+    "orgulho": [
+        "consegui",
+        "fiz sozinho",
+        "capaz",
+        "orgulhoso",
+        "orgulho"
+    ],
+    "gratidao": [
+        "obrigado",
+        "grato",
+        "ainda bem",
+        "valorizar",
+        "gratidao"
+    ],
+    "culpa": [
+        "nao devia",
+        "peso na consciencia",
+        "arrependido",
+        "remorso",
+        "culpa"
+    ],
+    "tedio": [
+        "chato",
+        "sem nada",
+        "inquieto de tédio",
+        "tempo nao passa",
+        "tedio"
+    ],
+    "mal_estar": [
+        "enjoo",
+        "tontura",
+        "dor no corpo",
+        "indisposto",
+        "mal estar",
+        "agonia"
+    ],
+    "dor_cabeca": [
+        "pressao nos olhos",
+        "cabeca explodindo",
+        "martelada",
+        "dor de cabeca"
+    ],
+    "nojo": [
+        "ascom",
+        "ecat",
+        "gosmento",
+        "textura ruim",
+        "nojo"
+    ],
+    "curiosidade": [
+        "quero saber",
+        "como funciona",
+        "interessado",
+        "descobrir",
+        "curiosidade"
+    ]
+}

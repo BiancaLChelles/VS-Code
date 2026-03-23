@@ -153,6 +153,7 @@ def exibir_interface_manejo(diag, expl, instr, frase):
 def processar_final(entrada_usuario, tipo_fluxo):
     """O Cérebro do SMARS: Conecta inputs ao motor_logico, dicionário e varredura"""
     import motor_logico 
+    import dicionario
     from datetime import datetime
     
     sentimento_final = "Não Identificado"
@@ -169,10 +170,12 @@ def processar_final(entrada_usuario, tipo_fluxo):
             if int_input and int_input.isdigit():
                 intensidade = int(int_input)
             
-            # Busca no seu arquivo dicionario.py
+            # Busca no arquivo dicionario.py
             cat_match = dicionario.buscar_sentimento(entrada_usuario)
+            #se não achar, aprende.
             if not cat_match:
-                cat_match = "outro" 
+                dicionario.aprender_novo_termo(entrada_usuario)
+                
 
         # --- CAMINHO B: TRADUÇÃO POR VARREDURA FÍSICA ---
         elif tipo_fluxo == "fisico":
