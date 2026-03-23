@@ -255,7 +255,7 @@ def carregar_logs(container_cards, filtro_dias=None):
     except Exception as e:
         print(f"Erro no banco: {e}")
 
-# --- 2. FUNÇÃO QUE CRIA A INTERFACE (A QUE VOCÊ DEVE CHAMAR) ---
+# --- 2. FUNÇÃO QUE CRIA A INTERFACE ---
 def abrir_historico():
     janela = ctk.CTkToplevel()
     janela.title("SMARS - HISTÓRICO DE SENTIMENTOS")
@@ -287,7 +287,7 @@ def abrir_historico():
 def abrir_explicacao_alexitimia():
     janela_alex = ctk.CTkToplevel()
     janela_alex.title("SMARS - O QUE É ALEXITIMIA?")
-    janela_alex.geometry("850x850")
+    janela_alex.geometry("650x650")
     janela_alex.attributes("-topmost", True)
 
     # 1. BOTÃO PRIMEIRO (side="bottom" reserva o espaço do rodapé antes de tudo)
@@ -314,7 +314,7 @@ def abrir_explicacao_alexitimia():
 
     texto_direto = (
         "ALEXITIMIA: A CIÊNCIA E A MEDIAÇÃO POR TRÁS DO SMARS\n"
-        "______________________________________________________________________\n\n"
+        "______________________________________________________________\n\n"
         "A Alexitimia — termo derivado do grego 'Alexisthymos' (a = ausência, lexis = palavra, thymos = emoção) — "
         "não é uma descoberta recente, mas um constructo clínico consolidado. O termo foi cunhado pelo psiquiatra "
         "Peter Sifneos, de Harvard, em 1973, no artigo 'The prevalence of alexithymic characteristics in psychosomatic patients', "
@@ -361,7 +361,7 @@ def abrir_explicacao_alexitimia():
 def abrir_conceito():
     janela = ctk.CTkToplevel()
     janela.title("SMARS - O QUE SÃO SENTIMENTOS?")
-    janela.geometry("950x900") 
+    janela.geometry("650x650") 
     janela.attributes("-topmost", True)
 
     # Botão no fundo primeiro
@@ -386,8 +386,8 @@ def abrir_conceito():
     caixa_texto.pack(padx=20, pady=(20, 0), fill="both", expand=True)
 
     texto_direto = (
-        "O QUE SÃO SENTIMENTOS? UMA PERSPECTIVA NEUROBIOLÓGICA E COGNITIVA\n"
-        "______________________________________________________________________\n\n"
+        "O QUE SÃO SENTIMENTOS? \nUMA PERSPECTIVA NEUROBIOLÓGICA E COGNITIVA\n"
+        "______________________________________________________________\n\n"
         "Cientificamente, o sentimento não é um evento isolado, mas o estágio final de um processo "
         "biológico complexo que visa a manutenção da vida. Tudo começa com a Homeostase, o esforço do "
         "organismo para manter o equilíbrio interno. Através da Interocepção, o sistema nervoso monitora "
@@ -431,16 +431,81 @@ def abrir_conceito():
     caixa_texto.insert("0.0", texto_direto)
     caixa_texto.configure(state="disabled") 
 
+
+def abrir_comousar():
+    janela = ctk.CTkToplevel()
+    janela.title("SMARS - COMO USAR?")
+    janela.geometry("650x650") 
+    janela.attributes("-topmost", True)
+
+    # Botão no fundo primeiro
+    btn_sair = ctk.CTkButton(
+        janela, 
+        text="VAMOS TESTAR", 
+        font=("Segoe UI", 14, "bold"),
+        fg_color="#1f538d", 
+        hover_color="#14375e",
+        height=45,
+        command=janela.destroy
+    )
+    btn_sair.pack(side="bottom", pady=(10, 25))
+
+    caixa_texto = ctk.CTkTextbox(
+        janela, 
+        font=("Segoe UI", 16), 
+        border_spacing=35,
+        fg_color="transparent",
+        wrap="word"
+    )
+    caixa_texto.pack(padx=20, pady=(20, 0), fill="both", expand=True)
+
+    texto_direto = (
+        "SMARS \nCOMO USAR?\n"
+        "______________________________________________________________\n\n"
+        """Para iniciar o processo de tradução de sinais e regulação emocional,siga as instruções de navegação da interface:
+
+1. INICIALIZAÇÃO DO SISTEMA:
+No menu principal, selecione a opção [IDENTIFICAR SENTIMENTOS].
+Este é o ponto de entrada para qualquer análise de sinais internos.
+
+2. SELEÇÃO DE FLUXO (Status da CPU):
+O sistema perguntará: "Sabe o que está sentindo?". Escolha o caminho baseado na clareza do seu processador central no momento:
+
+A) SE VOCÊ JÁ NOMEOU O SENTIMENTO QUE ESTÁ SENTINDO:
+ - Clique em SIM.
+ - Insira o nome do sentimento que você identificou
+(Ex: Ansiedade, Sobrecarga).
+- Aguarde o processamento do "MANEJO-RESPOSTA" com as instruções.
+
+B) SE VOCÊ NÃO SABE O NOME DO QUE ESTÁ SENTINDO:
+  - Clique em NÃO.
+  - O sistema abrirá um campo para entrada da TELEMETRIA BRUTA.
+  - Descreva as sensações físicas e mentais exatamente como você as sente.
+
+EXEMPLOS DE ENTRADA:
+ > "Sinto que minha mente vai explodir, tô acelerada, mãos frias."
+ > "Sinto minha barriga agitada, mãos suando e mente inquieta."
+ > "Meus olhos estão pesados, minha cabeça tá doendo."
+ > "To com um aperto na barriga e minha cabeça tá meio zonza."
+
+3. PROCESSAMENTO E SAÍDA:
+Após o envio do SENTIMENTO ou SENSAÇÕES, o SMARS atuará como  seu Driver de Intermediação, cruzando os dados para sugerir o  diagnóstico lógico e acender o seu "painel" em meio a   tempestade."""
+    )
+
+    caixa_texto.insert("0.0", texto_direto)
+    caixa_texto.configure(state="disabled") 
+
+
 def abrir_sobre_projeto():
     janela_sobre = ctk.CTkToplevel()
     janela_sobre.title("SMARS - SISTEMA DE MANEJO DE ALEXITIMIA E REEDUCAÇÃO SENTIMENTAL")
-    janela_sobre.geometry("950x900")
+    janela_sobre.geometry("650x650")
     janela_sobre.attributes("-topmost", True)
 
     # Botão no fundo primeiro
     btn_voltar = ctk.CTkButton(
         janela_sobre, 
-        text="SISTEMA VALIDADO", 
+        text="COMPREENDIDO", 
         font=("Segoe UI", 14, "bold"),
         fg_color="#1f538d", 
         hover_color="#14375e",
@@ -460,7 +525,7 @@ def abrir_sobre_projeto():
 
     texto_manifesto = (
         "SMARS: SISTEMA DE MANEJO DE ALEXITIMIA E REEDUCAÇÃO SENTIMENTAL\n"
-        "_________________________________________________________________________________\n\n"
+        "______________________________________________________________\n\n"
         "O SMARS não é meramente um utilitário de software; é uma infraestrutura de mediação projetada para a "
         "independência cognitiva. Ele nasce para preencher um hiato crítico no processamento de informações "
         "humanas: a incapacidade de converter o fluxo caótico de sinais interoceptivos em símbolos linguísticos "
@@ -496,6 +561,70 @@ def abrir_sobre_projeto():
     caixa_texto.insert("0.0", texto_manifesto)
     caixa_texto.configure(state="disabled")
 
+
+def abrir_intuito():
+    janela = ctk.CTkToplevel()
+    janela.title("SMARS - ARQUITETURA OPERACIONAL")
+    janela.geometry("650x650") 
+    janela.attributes("-topmost", True)
+
+    # Botão no fundo primeiro
+    btn_sair = ctk.CTkButton(
+        janela, 
+        text="COMPREENDIDO", 
+        font=("Segoe UI", 14, "bold"),
+        fg_color="#1f538d", 
+        hover_color="#14375e",
+        height=45,
+        command=janela.destroy
+    )
+    btn_sair.pack(side="bottom", pady=(10, 25))
+
+    caixa_texto = ctk.CTkTextbox(
+        janela, 
+        font=("Segoe UI", 16), 
+        border_spacing=35,
+        fg_color="transparent",
+        wrap="word"
+    )
+    caixa_texto.pack(padx=20, pady=(20, 0), fill="both", expand=True)
+
+    texto_direto = (
+       
+    """COMO FUNCIONA O SMARS?
+A ENGENHARIA DA REEDUCAÇÃO SENTIMENTAL E AUTONOMIA
+________________________________________________________________________
+
+O SMARS opera como um EXOESQUELETO MENTAL TEMPORÁRIO. Seu funcionamento não visa criar dependência tecnológica, mas sim realizar uma "atualização de firmware" no processador central do usuário (a mente), utilizando os princípios da Pedagogia de Vygotsky.
+
+O sistema funciona através de três estágios de maturação:
+
+1. O ESTÁGIO DO APOIO (Mediação Externa):
+   No início, o usuário enfrenta a "névoa" da Alexitimia e não consegue "enxergar" os proprios sentimentos.
+   O SMARS entra como o INSTRUMENTO DE MEDIAÇÃO. 
+   - O QUE O SOFTWARE FAZ: Ele fornece as palavras, os nomes e os caminhos que você ainda não consegue visualizar sozinho. Ele vai segurar todo o peso da interpretação e do processamento enquanto seu sistema interno está sobrecarregado e te fornecerá intruções para aquele momento.
+   - O OBJETIVO: Estabilizar o hardware e evitar o Meltdown imediato através de instruções externas de manejo e controle.
+
+2. A ZONA DE DESENVOLVIMENTO PROXIMAL (Aprendizado Ativo)
+   Com o uso contínuo, o funcionamento do SMARS cria um "Andaime". Cada vez que você descreve uma sensação fisica e o programa associa a um sentimento ou busca como lidar com um sentimento e o programa sugere um manejo, você está treinando seu cérebro a fazer essa associação.
+   - O QUE O SOFTWARE FAZ: Ele cria o link lógico entre o SINAL FÍSICP (ex: mão suando) e o SIGNIFICADO (ex: ansiedade) e cria a associação entre SENTIMENTO e MANEJO.
+   - O OBJETIVO: Diminuir a latência entre o sentir, o entender e o agir.
+
+3. A INTERIORIZAÇÃO (Soberania e Autonomia)
+   Este é o estágio final do uso do SMARS. De acordo com a teoria de Vygotsky, o que antes era feito com ajuda externa passa a ser feito internamente. 
+   - O QUE ACONTECE: O raciocínio lógico do programa é absorvido pelas suas próprias sinapses. Você começa a identificar as sensações, linka-las aos sentimentos correspondentes e a aplicar os manejos SOZINHO E AUTOMATICAMENTE, antes mesmo de abrir o software.
+   - O OBJETIVO FINAL: Que o SMARS se torne obsoleto. O intuito é que você "desinstale" a necessidade de usa-lo, porque agora você possui a SOBERANIA ABSOLUTA sobre o seu próprio código interno.
+
+MISSÃO OPERACIONAL: 
+
+O SMARS te apoia hoje para que você não precise de apoio amanhã. 
+A tecnologia a serviço da autonomia do sentir."""
+    )
+
+    caixa_texto.insert("0.0", texto_direto)
+    caixa_texto.configure(state="disabled")
+
+
 # --- INTERFACE PRINCIPAL (DASHBOARD) ---
 
 def criar_painel_principal():
@@ -506,7 +635,7 @@ def criar_painel_principal():
     # Título principal do Dashboard no topo da tela
     ctk.CTkLabel(root, text="SISTEMA DE MANEJO DE ALEXITIMIA E REEDUCAÇÃO SENTIMENTAL", font=("Segoe UI", 14, "bold")).pack(pady=20)
     
-    # Cria um 'Frame' (uma caixa invisível) para organizar os botões
+    # Cria um 'Frame' (uma caixa invisível) para organizar o botão principal
     frame_menu = ctk.CTkFrame(root, fg_color="transparent")
     frame_menu.pack(pady=0, padx=10, fill="both", expand=True)
 
@@ -526,50 +655,79 @@ def criar_painel_principal():
     )
     btn_scanner.grid(row=0, column=0, padx=15, pady=12) 
 
+    # Cria um 'Frame' (uma caixa invisível) para organizar os botões secundarios
+    frame_menu2 = ctk.CTkFrame(root, fg_color="transparent")
+    frame_menu2.pack(pady=0, padx=10, fill="both", expand=True)
+
+
     # BOTÃO 2: HISTÓRICO
     btn_hist = ctk.CTkButton(
-        frame_menu, text="HISTÓRICO DE SENTIMENTOS", 
-        width=280, height=55,
-        font=("Segoe UI", 14, "bold"),
+        frame_menu2, text="HISTÓRICO DE SENTIMENTOS", 
+        width=200, height=40,
+        font=("Segoe UI", 11, "bold"),
         fg_color="#1f538d",
         hover_color="#14375e",
         command=abrir_historico
     )
     btn_hist.grid(row=1, column=0, padx=15, pady=12) 
+
+     # BOTÃO 3: EXPLICAÇÃO SENTIMENTOS
+    btn_conceito = ctk.CTkButton(
+        frame_menu2, text="O QUE SÃO SENTIMENTOS?", 
+        width=200, height=40,
+        font=("Segoe UI", 11, "bold"),
+        fg_color="#1f538d",
+        hover_color="#14375e",
+        command=abrir_conceito
+    )
+    btn_conceito.grid(row=1, column=1, padx=15, pady=12) 
+
    
-    # BOTÃO 3: EXPLICAÇÃO PROGRAMA (O QUE É O SMARS)
+    # BOTÃO 4: EXPLICAÇÃO PROGRAMA (O QUE É O SMARS)
     btn_programa = ctk.CTkButton(
-        frame_menu, text="O QUE É O 'SMARS'?", 
-        width=280, height=55,
-        font=("Segoe UI", 14, "bold"),
+        frame_menu2, text="O QUE É O 'SMARS'?", 
+        width=200, height=40,
+        font=("Segoe UI", 11, "bold"),
         fg_color="#1f538d",
         hover_color="#14375e",
         command=abrir_sobre_projeto
     )
     btn_programa.grid(row=2, column=0, padx=15, pady=12) 
 
-    # BOTÃO 4: EXPLICAÇÃO ALEXITIMIA (O QUE É ALEXITIMIA)
+    # BOTÃO 5: COMO USAR? (COMO USAR O SMARS)
+    btn_programa = ctk.CTkButton(
+        frame_menu2, text="COMO USAR?", 
+        width=200, height=40,
+        font=("Segoe UI", 11, "bold"),
+        fg_color="#1f538d",
+        hover_color="#14375e",
+        command=abrir_comousar
+    )
+    btn_programa.grid(row=2, column=1, padx=15, pady=12) 
+
+ # BOTÃO 6: PRA QUE SERVE? (COMO USAR O SMARS)
+    btn_programa = ctk.CTkButton(
+        frame_menu2, text="PARA QUE SERVE O 'SMARS'?", 
+        width=200, height=40,
+        font=("Segoe UI", 11, "bold"),
+        fg_color="#1f538d",
+        hover_color="#14375e",
+        command=abrir_intuito
+    )
+    btn_programa.grid(row=3, column=0, padx=15, pady=12) 
+
+    # BOTÃO 7: EXPLICAÇÃO ALEXITIMIA (O QUE É ALEXITIMIA)
     btn_alexi = ctk.CTkButton(
-        frame_menu, text="O QUE É ALEXITIMIA?", 
-        width=280, height=55,
-        font=("Segoe UI", 14, "bold"),
+        frame_menu2, text="O QUE É ALEXITIMIA?", 
+        width=200, height=40,
+        font=("Segoe UI", 11, "bold"),
         fg_color="#1f538d",
         hover_color="#14375e",
         command=abrir_explicacao_alexitimia
     )
-    btn_alexi.grid(row=3, column=0, padx=15, pady=12)
+    btn_alexi.grid(row=3, column=1, padx=15, pady=12)
 
-    # BOTÃO 5: EXPLICAÇÃO SENTIMENTOS
-    btn_conceito = ctk.CTkButton(
-        frame_menu, text="O QUE SÃO SENTIMENTOS?", 
-        width=280, height=55,
-        font=("Segoe UI", 14, "bold"),
-        fg_color="#1f538d",
-        hover_color="#14375e",
-        command=abrir_conceito
-    )
-    btn_conceito.grid(row=4, column=0, padx=15, pady=12) 
-
+   
 
 
     # Texto de crédito no rodapé da janela
