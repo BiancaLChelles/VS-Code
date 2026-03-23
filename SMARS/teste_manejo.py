@@ -636,7 +636,7 @@ def criar_painel_principal():
     root.geometry("500x525") # Define o tamanho da janela (Largura x Altura)
 
     # Título principal do Dashboard no topo da tela
-    ctk.CTkLabel(root, text="SISTEMA DE MANEJO DE ALEXITIMIA E REEDUCAÇÃO SENTIMENTAL", font=("Segoe UI", 14, "bold")).pack(pady=20)
+    ctk.CTkLabel(root, text="SISTEMA DE MANEJO DE ALEXITIMIA E REEDUCAÇÃO SENTIMENTAL", font=("Segoe UI", 14, "bold")).pack(pady=30)
     
     # Cria um 'Frame' (uma caixa invisível) para organizar o botão principal
     frame_menu = ctk.CTkFrame(root, fg_color="transparent")

@@ -4,6 +4,8 @@ import json
 import os
 import unicodedata
 import re
+import customtkinter as ctk
+from tkinter import messagebox
 
 ARQUIVO_MEMORIA = "dicionario_sensacoes.json"
 
@@ -71,30 +73,73 @@ def buscar_sentimento(entrada):
             return categoria
     return None
 
+ctk.set_appearance_mode("dark")
+ctk.set_default_color_theme("blue")
+
 def aprender_novo_termo(entrada_desconhecida):
-    """Interface de aprendizado otimizada para ser chamada por outros scripts."""
-    # Tenta usar uma janela já existente se houver, senão cria uma temporária
+    """Interface de aprendizado moderna usando CustomTkinter."""
+    
+    # Gerenciamento da janela
     try:
-        temp_root = tk.Toplevel() # Cria uma janela sobreposta se o Tk principal existir
-        temp_root.withdraw()
+        temp_root = ctk.CTkToplevel() 
     except:
-        temp_root = tk.Tk()
-        temp_root.withdraw()
+        temp_root = ctk.CTk()
 
+    temp_root.title("Aprendizado - Exoesqueleto")
+    temp_root.geometry("450x550")
     temp_root.attributes("-topmost", True)
+    
+    # Variável para capturar a resposta
+    resultado = {"nova_cat": None}
 
+    def confirmar():
+        val = entry.get().lower().strip()
+        if val:
+            resultado["nova_cat"] = val
+            temp_root.destroy()
+
+    # Carregamento dos dados
     banco = carregar_banco()
     lista_formatada = "\n".join([f"• {cat}" for cat in sorted(banco.keys())])
     
-    instrucao = (f"Sinal '{entrada_desconhecida}' não identificado.\n\n"
-                 f"Associe a uma categoria da lista ou digite uma NOVA:\n"
-                 f"------------------------------------------\n"
-                 f"{lista_formatada}")
+    # --- Interface Visual ---
     
-    nova_cat = simpledialog.askstring("Aprendizado - Exoesqueleto", instrucao)
+    label_titulo = ctk.CTkLabel(temp_root, text="SINAL NÃO IDENTIFICADO", 
+                                font=ctk.CTkFont(size=14, weight="bold"), text_color="#ff5555")
+    label_titulo.pack(pady=(20, 5))
+
+    label_sinal = ctk.CTkLabel(temp_root, text=f"'{entrada_desconhecida}'", 
+                               font=ctk.CTkFont(size=18, weight="bold"))
+    label_sinal.pack(pady=5)
+
+    label_instrucao = ctk.CTkLabel(temp_root, text="Associe a uma categoria existente ou crie uma nova:",
+                                   font=ctk.CTkFont(size=12))
+    label_instrucao.pack(pady=10)
+
+    # Caixa de texto rolável para as categorias
+    textbox = ctk.CTkTextbox(temp_root, width=400, height=200, font=("Consolas", 12))
+    textbox.pack(padx=20, pady=10, fill="both", expand=True)
+    textbox.insert("0.0", f"CATEGORIAS ATUAIS:\n{'-'*30}\n{lista_formatada}")
+    textbox.configure(state="disabled")
+
+    # Entrada de texto customizada
+    entry = ctk.CTkEntry(temp_root, placeholder_text="Digite a categoria aqui...", 
+                         width=400, height=40)
+    entry.pack(pady=10, padx=20)
+    entry.focus_set()
+    entry.bind("<Return>", lambda e: confirmar())
+
+    # Botão estilizado
+    btn_confirmar = ctk.CTkButton(temp_root, text="ATUALIZAR DICIONÁRIO", 
+                                  command=confirmar, fg_color="#1f538d", hover_color="#2b71be")
+    btn_confirmar.pack(pady=(10, 20), padx=20)
+
+    # Loop para aguardar a interação
+    temp_root.wait_window()
+
+    nova_cat = resultado["nova_cat"]
 
     if nova_cat:
-        nova_cat = nova_cat.lower().strip()
         if nova_cat not in banco:
             banco[nova_cat] = []
         
@@ -103,10 +148,8 @@ def aprender_novo_termo(entrada_desconhecida):
             salvar_banco(banco)
             
         messagebox.showinfo("Sucesso", f"Memória Atualizada: '{entrada_desconhecida}' -> '{nova_cat}'")
-        temp_root.destroy()
         return nova_cat
     
-    temp_root.destroy()
     return None
 
 # ---  PARA TESTAR SOZINHO ---
