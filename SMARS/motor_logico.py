@@ -20,6 +20,8 @@ def obter_relatorio(cat_match, intensidade, hora_atual_str):
     hora_refeicao = (7 <= hora_atual <= 9) or (11 <= hora_atual <= 14) or (18 <= hora_atual <= 21)
 
 
+    # --- BLOCO DE MANEJOS DO EXOSQUELETO MENTAL ---
+
     if cat_match == "medo":
         if intensidade >= 7: 
             return ("O sistema travou por excesso de ameaças detectadas.", 
@@ -186,6 +188,96 @@ def obter_relatorio(cat_match, intensidade, hora_atual_str):
                 "Sensores em equilíbrio ideal. Baixa latência e silêncio interno.", 
                 "Registre esse estado. Aproveite a estabilidade para tarefas de baixa pressão.", 
                 "CONDIÇÕES IDEAIS. Sistema em ordem.")
+
+    elif cat_match == "rejeicao":
+        return ("Alerta de RSD (Sensibilidade à Rejeição).", 
+                "O sistema interpretou um input social como exclusão catastrófica.", 
+                "Verifique os fatos: existe prova real de rejeição ou é um erro de leitura do sensor? Saia do social por 10 min.", 
+                "A opinião alheia não altera seu código-fonte. ESTABILIZE-SE.")
+
+    elif cat_match == "empolgada":
+        return ("Pico de Dopamina / Sistema em Festa.", 
+                "Energia de recompensa em nível máximo. Grande chance de impulsividade.", 
+                "Aproveite a onda para tarefas difíceis, mas evite compras ou compromissos de longo prazo agora.", 
+                "SISTEMA EM ALTA. Use essa energia com inteligência!")
+
+    elif cat_match == "conexao":
+        return ("Sincronia de Sistema / Vínculo.", 
+                "O hardware encontrou um terminal compatível e o intercâmbio de dados é seguro.", 
+                "Permita o download de afeto. Valide a presença do outro e registre este log positivo.", 
+                "CONEXÃO ESTABELECIDA. O sistema não está sozinho.")
+
+    elif cat_match == "alivio":
+        return ("Tarefa Concluída / Limpeza de Cache.", 
+                "Uma carga pesada foi removida da fila de processamento. Tensão dissipada.", 
+                "Respire fundo e sinta o espaço livre no HD mental antes de carregar a próxima tarefa.", 
+                "LOG DE SUCESSO. Ufa!")
+
+    elif cat_match == "afeto":
+        return ("Aquecimento de Núcleo / Ternura.", 
+                "Processamento de dados positivos sobre terceiros ou sobre si mesmo.", 
+                "Deixe a temperatura subir. Aproveite a sensação física sem tentar explicá-la logicamente.", 
+                "HARDWARE AQUECIDO COM SUCESSO. Sinta o carinho.")
+
+    elif cat_match == "confusao":
+        return ("Erro de Processamento / Dados Fragmentados.", 
+                "Muitos inputs simultâneos ou instruções contraditórias recebidas.", 
+                "Pare a entrada de dados. Peça para repetirem devagar ou divida o problema em partes menores.", 
+                "CÉREBRO FRITO. Reinicie a explicação por partes.")
+
+    elif cat_match == "frustracao":
+        return ("Loop de Erro / Impedimento de Execução.", 
+                "O comando foi enviado, mas o resultado esperado não foi atingido repetidas vezes.", 
+                "Mude de tarefa por 5 minutos. O sistema precisa limpar o erro antes de tentar novamente.", 
+                "NÃO FORCE O SCRIPT. Tente uma abordagem diferente depois.")
+
+    elif cat_match == "solidao":
+        return ("Sinal de Rede Fraco / Isolamento.", 
+                "O sistema detectou falta de intercâmbio de dados sociais necessários para manutenção.", 
+                "Busque conexão com algo: um animal, uma música, ou envie uma mensagem curta para um terminal confiável.", 
+                "BUSCANDO REDE... Tente uma conexão segura.")
+
+    elif cat_match == "orgulho":
+        return ("Validação de Build / Conquista Própria.", 
+                "Reconhecimento interno de que o código rodou perfeitamente após esforço.", 
+                "Salve esse estado. Você superou bugs e entregou o resultado. Comemore.", 
+                "VERSÃO ESTÁVEL ALCANÇADA. Você é capaz!")
+
+    elif cat_match == "gratidao":
+        return ("Otimização de Logs Positivos.", 
+                "O sistema está focando nos recursos disponíveis em vez das falhas.", 
+                "Anote o motivo dessa gratidão para consultas em momentos de 'burnout' ou 'tristeza'.", 
+                "SISTEMA VALORIZADO. Continue assim.")
+
+    elif cat_match == "culpa":
+        return ("Alerta de Erro Crítico Interno.", 
+                "O sistema está punindo o hardware por um log de evento passado.", 
+                "Analise: houve dano real? Se sim, tente o reparo. Se não, encerre esse processo repetitivo.", 
+                "REPARAÇÃO, NÃO PUNIÇÃO. Corrija o código e siga.")
+
+    elif cat_match == "tedio":
+        return ("Modo Ocioso / Falta de Estímulo.", 
+                "Baixa atividade na CPU gerando inquietação e busca por ruído.", 
+                "Inicie uma tarefa de 'curiosidade' ou uma manutenção física leve (limpeza) para gerar sinal.", 
+                "SISTEMA EM STANDBY. Busque um novo input.")
+
+    elif cat_match == "mal_estar":
+        return ("Alerta Geral de Sensores Físicos.", 
+                "O hardware reporta instabilidade não específica (náusea ou tontura).", 
+                "Sente-se ou deite-se. Verifique temperatura e respiração. O sistema precisa de repouso físico imediato.", 
+                "MODO DE PRESERVAÇÃO FÍSICA. Vá com calma.")
+
+    elif cat_match == "dor_cabeca":
+        return ("Pressão Interna no Processador.", 
+                "Carga excessiva de luz, som ou processamento mental gerando dor física.", 
+                "Escuro, silêncio e hidratação. Desligue as telas imediatamente.", 
+                "LIMITE DE PROCESSAMENTO ATINGIDO. Desligue os monitores.")
+
+    elif cat_match == "nojo":
+        return ("Rejeição de Input Sensorial.", 
+                "O sensor detectou uma textura, cheiro ou ideia incompatível com o sistema.", 
+                "Afaste-se do estímulo. Lave o que for necessário. Respeite o limite do seu hardware.", 
+                "TEXTURA INVÁLIDA. Remova o objeto do ambiente.")
 
     return ("Sinal não identificado.", 
             f"Um novo estado foi detectado às {h}h, mas ainda não possui um manual específico.", 
