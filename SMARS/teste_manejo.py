@@ -345,7 +345,7 @@ def confirmar_limpeza_total(container_cards):
 def abrir_historico():
     janela = ctk.CTkToplevel()
     janela.title("SMARS - HISTÓRICO DE SENTIMENTOS")
-    janela.geometry("700x750")
+    janela.geometry("700x650")
     janela.attributes("-topmost", True)
     janela.configure(fg_color="#1a1a1a")
 
@@ -354,7 +354,7 @@ def abrir_historico():
     frame_filtros = ctk.CTkFrame(janela, fg_color="transparent")
     frame_filtros.pack(pady=10, padx=10, fill="x")
 
-    container_cards = ctk.CTkScrollableFrame(janela, width=650, height=500, fg_color="#242424", scrollbar_button_color="#1f538d", corner_radius=15)
+    container_cards = ctk.CTkScrollableFrame(janela, width=550, height=400, fg_color="#242424", scrollbar_button_color="#1f538d", corner_radius=15)
     container_cards.pack(pady=10, padx=20, fill="both", expand=True)
 
     estilo_btn = {"width": 100, "height": 35, "font": ("Segoe UI", 12, "bold")}
