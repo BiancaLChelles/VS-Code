@@ -32,7 +32,7 @@ configurar_banco()
 def salvar_log(sentimento, intensidade):
     conn = sqlite3.connect("smars_logs.db")
     cursor = conn.cursor()
-    agora = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
+    agora = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     cursor.execute("INSERT INTO logs (data_hora, sentimento, intensidade) VALUES (?, ?, ?)", 
                    (agora, sentimento, intensidade))
     conn.commit()
@@ -234,9 +234,11 @@ def carregar_logs(container_cards, filtro_dias=None):
         import sqlite3
         conn = sqlite3.connect("smars_logs.db")
         cursor = conn.cursor()
+        cursor.execute("PRAGMA table_info(logs)")
+        print(cursor.fetchall())
         
         if filtro_dias is not None:
-            query = "SELECT * FROM logs WHERE data >= date('now', ?) ORDER BY id DESC"
+            query = "SELECT * FROM logs WHERE data_hora >= datetime('now', 'localtime', ?) ORDER BY id DESC"
             cursor.execute(query, (f"-{filtro_dias} days",))
         else:
             cursor.execute("SELECT * FROM logs ORDER BY id DESC")
@@ -250,13 +252,94 @@ def carregar_logs(container_cards, filtro_dias=None):
                 card = ctk.CTkFrame(container_cards, fg_color="#2b2b2b", corner_radius=10, border_width=1, border_color="#3d3d3d")
                 card.pack(pady=8, padx=10, fill="x")
 
-                ctk.CTkLabel(card, text=f"DATA/HORA: {row[1]}", font=("Segoe UI", 11), text_color="#1f538d").pack(anchor="w", padx=15, pady=(10, 0))
+                # O row[0] é o ID do registro no SQLite
+                id_log = row[0]
+
+                def excluir_registro(id_especifico):
+                     conn = sqlite3.connect("smars_logs.db")
+                     cursor = conn.cursor()
+                     cursor.execute("DELETE FROM logs WHERE id = ?", (id_especifico,))
+                     conn.commit()
+                     conn.close()
+                     carregar_logs(container_cards) # Recarrega a lista automaticamente
+
+                # Pegamos a data do banco (2026-03-24 11:15) e invertemos para exibição
+                data_banco = row[1] 
+                try:
+                # Tenta converter o que veio do banco para o formato BR
+                    data_formatada = datetime.strptime(data_banco, "%Y-%m-%d %H:%M:%S").strftime("%d/%m/%Y %H:%M")
+                except:
+                # Se o dado antigo ainda estiver no formato BR, ele apenas usa o que já tem
+                    data_formatada = data_banco
+
+                ctk.CTkLabel(card, text=f"DATA/HORA: {data_formatada}", font=("Segoe UI", 11), text_color="#1f538d").pack(anchor="w", padx=15, pady=(10, 0))
                 ctk.CTkLabel(card, text=str(row[2]).upper(), font=("Segoe UI", 18, "bold"), text_color="#ffffff").pack(anchor="w", padx=15)
                 ctk.CTkLabel(card, text=f"NÍVEL DE TELEMETRIA: {row[3]}", font=("Segoe UI", 13), text_color="#aaaaaa").pack(anchor="w", padx=15, pady=(0, 10))
+                btn_del = ctk.CTkButton(card, text="EXCLUIR", width=30, height=30, fg_color="#444", hover_color="red", 
+                        command=lambda id_p=id_log: excluir_registro(id_p))
+                btn_del.pack(side="right", padx=10, pady=5)
 
         conn.close()
     except Exception as e:
         print(f"Erro no banco: {e}")
+
+
+
+def confirmar_limpeza_total(container_cards):
+    def acao_deletar():
+        try:
+            import sqlite3
+            conn = sqlite3.connect("smars_logs.db")
+            cursor = conn.cursor()
+            cursor.execute("DELETE FROM logs")
+            conn.commit()
+            conn.close()
+            
+            # Fecha a janela de confirmação
+            janela_confirma.destroy()
+            
+            # ATUALIZAÇÃO VISUAL: Limpa a tela de histórico imediatamente
+            carregar_logs(container_cards)
+            
+        except Exception as e:
+            print(f"Erro ao deletar: {e}")
+
+    # Configuração da Janela de Confirmação
+    janela_confirma = ctk.CTkToplevel()
+    janela_confirma.title("CONFIRMAÇÃO CRÍTICA")
+    janela_confirma.geometry("450x350")
+    janela_confirma.attributes("-topmost", True)
+    janela_confirma.configure(fg_color="#1a1a1a")
+
+    aviso = ("ESSA AÇÃO APAGARÁ TODO O HISTÓRICO DE SENTIMENTOS.\n\n"
+             "ESSA AÇÃO NÃO PODERÁ SER DESFEITA.\n\n"
+             "O HISTÓRICO DE SENTIMENTO NUNCA SERÁ RECUPERADO.")
+    
+    ctk.CTkLabel(janela_confirma, text=aviso, text_color="#e74c3c", 
+                 font=("Segoe UI", 13, "bold"), wraplength=500).pack(pady=30)
+
+    # Botão de exclusão (inicia desativado)
+    btn_excluir = ctk.CTkButton(janela_confirma, text="APAGAR O HISTÓRICO", 
+                                 fg_color="#c0392b", hover_color="#962d22",
+                                 state="disabled", command=acao_deletar,
+                                 font=("Segoe UI", 12, "bold"), height=40)
+    
+    # Lógica da trava de segurança
+    def liberar_botao():
+        if check_var.get() == "on":
+            btn_excluir.configure(state="normal")
+        else:
+            btn_excluir.configure(state="disabled")
+
+    check_var = ctk.StringVar(value="off")
+    check = ctk.CTkCheckBox(janela_confirma, text="Eu compreendo e desejo prosseguir", 
+                            variable=check_var, onvalue="on", offvalue="off", 
+                            command=liberar_botao, font=("Segoe UI", 12),
+                            fg_color="#1f538d", border_color="#1f538d")
+    
+    check.pack(pady=10)
+    btn_excluir.pack(pady=20)
+
 
 # --- 2. FUNÇÃO QUE CRIA A INTERFACE ---
 def abrir_historico():
@@ -281,6 +364,7 @@ def abrir_historico():
     ctk.CTkButton(frame_filtros, text="7 DIAS", command=lambda: carregar_logs(container_cards, 7), **estilo_btn).pack(side="left", padx=10, expand=True)
     ctk.CTkButton(frame_filtros, text="30 DIAS", command=lambda: carregar_logs(container_cards, 30), **estilo_btn).pack(side="left", padx=10, expand=True)
     ctk.CTkButton(frame_filtros, text="TODOS", command=lambda: carregar_logs(container_cards), **estilo_btn).pack(side="left", padx=10, expand=True)
+    ctk.CTkButton(frame_filtros, text="EXCLUIR HISTÓRICO", command=lambda: confirmar_limpeza_total(container_cards),fg_color="#962d22",hover_color="#e74c3c",**estilo_btn).pack(side="left", padx=10, expand=True)
 
     # Iniciar carregando os dados assim que abrir
     carregar_logs(container_cards)
