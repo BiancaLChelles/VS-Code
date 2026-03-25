@@ -9,7 +9,20 @@ import motor_logico  # Importa o arquivo de manejo
 import sqlite3
 from datetime import datetime, timedelta
 
+
 hora_atual = datetime.now().strftime("%H:%M")
+
+def centralizar_janela(janela, largura, altura):
+    # Pega a largura e altura da tela do seu computador
+    largura_tela = janela.winfo_screenwidth()
+    altura_tela = janela.winfo_screenheight()
+
+    # Calcula a posição X e Y para o centro
+    pos_x = (largura_tela // 2) - (largura // 2)
+    pos_y = (altura_tela // 2) - (altura // 2)
+
+    # Define a geometria: "Largura x Altura + PosX + PosY"
+    janela.geometry(f"{largura}x{altura}+{pos_x}+{pos_y}")
 
 def configurar_banco():
     conn = sqlite3.connect("smars_logs.db")
@@ -20,7 +33,9 @@ def configurar_banco():
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             data_hora TEXT,
             sentimento TEXT,
-            intensidade TEXT
+            intensidade INTEGER,
+            identifica INTEGER,
+            manejo TEXT
         )
     """)
     conn.commit()
@@ -29,12 +44,12 @@ def configurar_banco():
 # Chama a configuração ao iniciar o programa
 configurar_banco()
 
-def salvar_log(sentimento, intensidade):
+def salvar_log(sentimento, intensidade, identifica, manejo):
     conn = sqlite3.connect("smars_logs.db")
     cursor = conn.cursor()
     agora = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    cursor.execute("INSERT INTO logs (data_hora, sentimento, intensidade) VALUES (?, ?, ?)", 
-                   (agora, sentimento, intensidade))
+    cursor.execute("INSERT INTO logs (data_hora, sentimento, intensidade, identifica, manejo) VALUES (?, ?, ?, ?, ?)", 
+                   (agora, sentimento, intensidade,identifica, manejo))
     conn.commit()
     conn.close()
 
@@ -44,13 +59,12 @@ ctk.set_default_color_theme("blue") # Define a cor azul como padrão para botõe
 
 # --- FUNÇÕES DAS JANELAS PRINCIPAIS ---
 
-import customtkinter as ctk
-from datetime import datetime
+
 def abrir_scanner():
     """Abre apenas a janela de decisão inicial"""
     janela_decisao = ctk.CTkToplevel()
     janela_decisao.title("SMARS - SCANNER")
-    janela_decisao.geometry("400x250")
+    centralizar_janela(janela_decisao, 400,200)
     janela_decisao.attributes("-topmost", True)
     janela_decisao.grab_set()
 
@@ -62,18 +76,64 @@ def abrir_scanner():
     # Ao clicar nos botões abaixo, eles sim chamam a função 'processar_final' com os dados
     def vai_para_sim():
         janela_decisao.destroy()
-        res = ctk.CTkInputDialog(text="O que sente?", title="MANEJO").get_input()
-        if res: processar_final(res, "direto")
+        
+        # Criando a janela de input personalizada
+        input_janela = ctk.CTkToplevel()
+        input_janela.title("MANEJO")
+        centralizar_janela(input_janela, 400, 200) # AGORA ESTÁ CENTRALIZADA
+        input_janela.attributes("-topmost", True)
+        input_janela.configure(fg_color="#1a1a1a")
+
+        ctk.CTkLabel(input_janela, text="O que sente?", font=("Segoe UI", 14, "bold")).pack(pady=20)
+        
+        entrada = ctk.CTkEntry(input_janela, width=300, fg_color="#242424", border_color="#1f538d")
+        entrada.pack(pady=10)
+        entrada.focus_set() # Foca o cursor automaticamente
+
+        identifica =True
+
+        def enviar():
+            res = entrada.get()
+            if res:
+                input_janela.destroy()
+                processar_final(res, "direto")
+
+        ctk.CTkButton(input_janela, text="PROCESSAR", command=enviar, fg_color="#1f538d").pack(pady=15)
+        # Permite apertar ENTER para enviar
+        input_janela.bind('<Return>', lambda event: enviar())
 
     def vai_para_nao():
         janela_decisao.destroy()
-        res = ctk.CTkInputDialog(text="Sensações físicas:", title="VARREDURA").get_input()
-        if res: processar_final(res, "fisico")
+        
+        # Criando a janela de varredura personalizada
+        input_janela = ctk.CTkToplevel()
+        input_janela.title("VARREDURA")
+        centralizar_janela(input_janela, 400, 200) # AGORA ESTÁ CENTRALIZADA
+        input_janela.attributes("-topmost", True)
+        input_janela.configure(fg_color="#1a1a1a")
 
-    ctk.CTkButton(frame_btns, text="SIM", command=vai_para_sim, fg_color="#1f538d").pack(side="left", padx=10)
-    ctk.CTkButton(frame_btns, text="NÃO", command=vai_para_nao, fg_color="#c0392b").pack(side="left", padx=10)
+        ctk.CTkLabel(input_janela, text="Sensações físicas:", font=("Segoe UI", 14, "bold")).pack(pady=20)
+        
+        entrada = ctk.CTkEntry(input_janela, width=300, fg_color="#242424", border_color="#c0392b")
+        entrada.pack(pady=10)
+        entrada.focus_set()
 
-def exibir_interface_manejo(diag, expl, instr, frase):
+        identifica = False
+
+        def enviar():
+            res = entrada.get()
+            if res:
+                input_janela.destroy()
+                processar_final(res, "fisico")
+
+        ctk.CTkButton(input_janela, text="PROCESSAR", command=enviar, fg_color="#c0392b").pack(pady=15)
+        # Permite apertar ENTER para enviar
+        input_janela.bind('<Return>', lambda event: enviar())
+        
+    ctk.CTkButton(frame_btns, text="SIM", command=vai_para_sim, fg_color="#1f538d", width=120).pack(side="left", padx=10)
+    ctk.CTkButton(frame_btns, text="NÃO", command=vai_para_nao, fg_color="#c0392b", width=120).pack(side="left", padx=10)    
+
+def exibir_interface_manejo(diag, expl, instr, frase,cat_match):
     import customtkinter as ctk
 
     # 1. CRIAR A ESTRUTURA INICIAL
@@ -81,18 +141,30 @@ def exibir_interface_manejo(diag, expl, instr, frase):
     janela_res.title("SMARS | Central de Manejo")
     
     # Ajustei a geometria inicial para permitir o crescimento vertical (scroll)
-    janela_res.geometry("600x600") 
+    centralizar_janela(janela_res,600,500) 
     janela_res.configure(fg_color="#0B0D14")
     janela_res.attributes("-topmost", True)
+    janela_res.grab_set()
     
     # Deixa a janela invisível por um instante para evitar o "flash"
     janela_res.attributes("-alpha", 0.0) 
 
-    def desenhar_conteudo():
+    def desenhar_conteudo(diag,expl,instr,frase, cat_match):
         # Cores de Acento (Dinâmicas conforme o diagnóstico)
-        cor_acento = "#4F46E5"
-        if any(p in str(diag).upper() for p in ["CRÍTICO", "MELTDOWN", "SHUTDOWN", "CRISE"]):
-            cor_acento = "#E11D48"
+        cat= str(cat_match).lower().strip()
+        cor_acento= "#C7CACF"
+        # 1. SENTIMENTOS RUINS / URGENTES (VERMELHO)
+        if cat in ["medo", "raiva", "looping", "ansiedade", "tristeza", "sensorial", "shutdown", "dissociacao", "burnout", "mal_estar", "dor_cabeca", "nojo", "culpa", "rejeicao", "frustracao", "confusao"]:
+            cor_acento = "#E11D48" 
+
+    # 2. SENTIMENTOS MÉDIOS / ALERTAS (AMARELO)
+        elif cat in ["fome", "sede", "cansaco", "inercia", "verbal", "injustica", "tedio", "stimming"]:
+            cor_acento = "#F59E0B"
+
+    # 3. SENTIMENTOS BONS / ESTÁVEIS (VERDE)
+        else:
+            cor_acento= "#10B981"
+     
         
         # Container Scrollable para garantir que o texto longo não suma
         scroll_main = ctk.CTkScrollableFrame(janela_res, fg_color="transparent", width=580, height=600)
@@ -100,20 +172,20 @@ def exibir_interface_manejo(diag, expl, instr, frase):
 
         # Cabeçalho de Telemetria
         ctk.CTkLabel(scroll_main, text="Sistema de Manejo de Alexitimia e Reeducação Sentimental", 
-                     font=("Segoe UI", 10, "bold"), text_color=cor_acento).pack(pady=(20,0), padx=30, anchor="w")
+                     font=("Segoe UI", 12, "bold"), text_color= "#335BC9").pack(pady=(20,0), padx=30, anchor="w")
         
         # Título do Diagnóstico (Usa wraplength para não fugir da tela)
         lbl_diag = ctk.CTkLabel(scroll_main, text=diag, font=("Segoe UI Light", 28), 
-                                text_color="#FFFFFF", wraplength=500, justify="left")
+                                text_color=cor_acento, wraplength=500, justify="left")
         lbl_diag.pack(padx=30, pady=(0, 10), anchor="w")
 
         # Card Principal de Informações
-        card = ctk.CTkFrame(scroll_main, fg_color="#161B2A", corner_radius=20)
+        card = ctk.CTkFrame(scroll_main, fg_color="#161B2A", corner_radius=20, border_color=cor_acento,border_width=2)
         card.pack(fill="both", expand=True, padx=20, pady=10)
 
         # SEÇÃO: ANÁLISE TÉCNICA
-        ctk.CTkLabel(card, text="ANÁLISE TÉCNICA", font=("Segoe UI", 10, "bold"), 
-                     text_color="#64748B",wraplength=480, justify="left").pack(pady=(20,0), padx=25, anchor="w")
+        ctk.CTkLabel(card, text="ANÁLISE TÉCNICA", font=("Segoe UI", 12, "bold"), 
+                     text_color=cor_acento,wraplength=480, justify="left").pack(pady=(20,0), padx=25, anchor="w")
         
         lbl_expl = ctk.CTkLabel(card, text=expl, font=("Segoe UI", 13), text_color="#CBD5E1", 
                                 wraplength=480, justify="left")
@@ -123,22 +195,25 @@ def exibir_interface_manejo(diag, expl, instr, frase):
         ctk.CTkFrame(card, height=1, fg_color="#1E293B").pack(fill="x", padx=25, pady=10)
 
         # SEÇÃO: INSTRUÇÕES DE MANEJO
-        ctk.CTkLabel(card, text="INSTRUÇÕES / PROTOCOLO", font=("Segoe UI", 10, "bold"), 
+        ctk.CTkLabel(card, text="INSTRUÇÕES / PROTOCOLO", font=("Segoe UI", 12, "bold"), 
                      text_color=cor_acento ,wraplength=480, justify="left").pack(pady=(10,0), padx=25, anchor="w")
         
         lbl_instr = ctk.CTkLabel(card, text=instr, font=("Segoe UI Semibold", 15), text_color="#FFFFFF", 
                                  wraplength=480, justify="left")
         lbl_instr.pack(pady=10, padx=25, anchor="w")
 
+         # Divisor sutil
+        ctk.CTkFrame(card, height=1, fg_color="#1E293B").pack(fill="x", padx=25, pady=5)
+
         # SEÇÃO: FRASE / LOG
         if frase:
-            ctk.CTkLabel(card, text=f"LOG: {frase}", font=("Consolas", 14, "italic"), 
+            ctk.CTkLabel(card, text=f"{frase}", font=("Consolas", 14, "italic"), 
                          text_color="#3474CE",wraplength=480, justify="left").pack(pady=(0, 20), padx=25, anchor="w")
 
         # Botão de Estabilização (Fixo no final do scroll)
         ctk.CTkButton(scroll_main, text="FINALIZAR", command=janela_res.destroy, 
-                      font=("Segoe UI", 13, "bold"), fg_color=cor_acento, 
-                      hover_color="#3730A3", height=50, corner_radius=12).pack(pady=30, padx=30, fill="x")
+                      font=("Segoe UI", 13, "bold"), fg_color="#335BC9", 
+                      hover_color="#254499", height=50, corner_radius=12).pack(pady=30, padx=30, fill="x")
 
         # Finalização: Torna visível e foca
         janela_res.attributes("-alpha", 1.0)
@@ -148,7 +223,7 @@ def exibir_interface_manejo(diag, expl, instr, frase):
             pass
 
     # Executa o desenho após o delay de segurança
-    janela_res.after(200, desenhar_conteudo)
+    janela_res.after(10, lambda: desenhar_conteudo(diag, expl, instr, frase, cat_match))
 
 def processar_final(entrada_usuario, tipo_fluxo):
     """O Cérebro do SMARS: Conecta inputs ao motor_logico, dicionário e varredura"""
@@ -159,17 +234,24 @@ def processar_final(entrada_usuario, tipo_fluxo):
     sentimento_final = "Não Identificado"
     intensidade = 5
     cat_match = "outro"
+   
 
     try:
         # --- CAMINHO A: IDENTIFICAÇÃO DIRETA ---
         if tipo_fluxo == "direto":
-            sentimento_final = entrada_usuario
-            int_input = ctk.CTkInputDialog(text="Intensidade (1 a 10):", title="INTENSIDADE").get_input()
             
+            sentimento_final = entrada_usuario
+            dialog = ctk.CTkInputDialog(text="Intensidade (1 a 10):", title="INTENSIDADE")
+            dialog.geometry(f"+{int(dialog.winfo_screenwidth()/2 - 150)}+{int(dialog.winfo_screenheight()/2 - 100)}")
+            int_input= dialog.get_input()
+            
+
             intensidade = 5 # Valor padrão caso o input seja cancelado
             if int_input and int_input.isdigit():
                 intensidade = int(int_input)
             
+            identifica = True
+
             # Busca no arquivo dicionario.py
             cat_match = dicionario.buscar_sentimento(entrada_usuario)
             #se não achar, aprende.
@@ -181,9 +263,17 @@ def processar_final(entrada_usuario, tipo_fluxo):
         elif tipo_fluxo == "fisico":
             # 1. O SISTEMA ACESSA OS SENSORES HARDWARE
             detectado_bruto = varredura_fisica.tradutor_fisico(entrada_usuario)
-            
+          
             sentimento_final = str(detectado_bruto).upper()
+            dialog = ctk.CTkInputDialog(text="Intensidade (1 a 10):", title="INTENSIDADE")
+            dialog.geometry(f"+{int(dialog.winfo_screenwidth()/2 - 150)}+{int(dialog.winfo_screenheight()/2 - 100)}")
+            int_input= dialog.get_input()
+
             intensidade = 7  # Nível de alerta padrão para detecção via sensores (Telemetria Automática)
+            if int_input and int_input.isdigit():
+                intensidade = int(int_input)
+
+            identifica = False
 
             # 2. PONTE DE CATEGORIAS (MAPEAMENTO PARA O MOTOR LÓGICO)
             ponte_categorias = {
@@ -213,10 +303,13 @@ def processar_final(entrada_usuario, tipo_fluxo):
             diag, expl, instr, frase = motor_logico.obter_relatorio(cat_match, intensidade, hora_atual)
             
             # Exibe na interface SMARS (Estilo requinte)
-            exibir_interface_manejo(diag, expl, instr, frase)
+            exibir_interface_manejo(diag, expl, instr, frase, cat_match)
             
-            # Salva no histórico de telemetria
-            salvar_log(sentimento_final, f"{intensidade}/10")
+            # Criamos uma string organizada para o banco não reclamar da "tupla"
+            relatorio_texto = f"DIAGNÓSTICO: {diag}\n\nEXPLICAÇÃO: {expl}\n\nMANEJO: {instr}\n\n{frase}"
+    
+             # Agora passamos o TEXTO (relatorio_texto) e não a tupla
+            salvar_log(sentimento_final, intensidade, identifica,manejo=relatorio_texto)
             
         except Exception as e:
             print(f"Erro ao processar motor lógico ou interface: {e}")
@@ -224,8 +317,45 @@ def processar_final(entrada_usuario, tipo_fluxo):
     except Exception as e:
         print(f"ERRO CRÍTICO NO SISTEMA SMARS: {e}")
 
+
+
+# --- 2. FUNÇÃO QUE CRIA A INTERFACE ---
+def abrir_historico():
+    janela = ctk.CTkToplevel()
+    janela.title("SMARS - HISTÓRICO DE SENTIMENTOS")
+    centralizar_janela(janela,700, 650)
+    janela.attributes("-topmost", False)
+    janela.lift()
+    janela.focus_force()
+    janela.configure(fg_color="#1a1a1a")
+    janela.grab_set()
+
+    ctk.CTkLabel(janela, text="REGISTROS DE SENTIMENTOS", font=("Segoe UI", 24, "bold"), text_color="#1f538d").pack(pady=(20, 10))
+
+    frame_filtros = ctk.CTkFrame(janela, fg_color="transparent")
+    frame_filtros.pack(pady=10, padx=10, fill="x")
+
+    container_cards = ctk.CTkScrollableFrame(janela, width=550, height=400, fg_color="#242424", scrollbar_button_color="#1f538d", corner_radius=15)
+    container_cards.pack(pady=10, padx=20, fill="both", expand=True)
+
+    estilo_btn = {"width": 100, "height": 35, "font": ("Segoe UI", 12, "bold")}
+
+    # Os botões agora chamam a função de carga passando o container correto
+    ctk.CTkButton(frame_filtros, text="24 HORAS", command=lambda: carregar_logs(container_cards,janela, 1), **estilo_btn).pack(side="left", padx=10, expand=True)
+    ctk.CTkButton(frame_filtros, text="7 DIAS", command=lambda: carregar_logs(container_cards, janela,7), **estilo_btn).pack(side="left", padx=10, expand=True)
+    ctk.CTkButton(frame_filtros, text="30 DIAS", command=lambda: carregar_logs(container_cards, janela,30), **estilo_btn).pack(side="left", padx=10, expand=True)
+    ctk.CTkButton(frame_filtros, text="TODOS", command=lambda: carregar_logs(container_cards, janela), **estilo_btn).pack(side="left", padx=10, expand=True)
+    ctk.CTkButton(frame_filtros, text="EXCLUIR HISTÓRICO", command=lambda: confirmar_limpeza_total(container_cards),fg_color="#962d22",hover_color="#e74c3c",**estilo_btn).pack(side="left", padx=10, expand=True)
+
+    # Iniciar carregando os dados assim que abrir
+    carregar_logs(container_cards,janela)
+
+    ctk.CTkButton(janela, text="CONCLUIR", font=("Segoe UI", 14, "bold"), fg_color="#d35400", hover_color="#a04000", height=45, command=janela.destroy).pack(side="bottom", pady=25)
+
+
+
 # --- 1. FUNÇÃO QUE APENAS BUSCA NO BANCO E DESENHA OS CARDS ---
-def carregar_logs(container_cards, filtro_dias=None):
+def carregar_logs(container_cards, janela=None, filtro_dias=None):
     # Limpeza visual do container
     for widget in container_cards.winfo_children():
         widget.destroy()
@@ -233,6 +363,7 @@ def carregar_logs(container_cards, filtro_dias=None):
     try:
         import sqlite3
         conn = sqlite3.connect("smars_logs.db")
+        conn.row_factory = sqlite3.Row
         cursor = conn.cursor()
         cursor.execute("PRAGMA table_info(logs)")
         print(cursor.fetchall())
@@ -248,42 +379,156 @@ def carregar_logs(container_cards, filtro_dias=None):
         if not rows:
             ctk.CTkLabel(container_cards, text=">>> NENHUM LOG REGISTRADO.", font=("Segoe UI", 14, "italic"), text_color="gray").pack(pady=50)
         else:
-            for row in rows:
-                card = ctk.CTkFrame(container_cards, fg_color="#2b2b2b", corner_radius=10, border_width=1, border_color="#3d3d3d")
-                card.pack(pady=8, padx=10, fill="x")
+           for row in rows:
+            # 1. CRIAR O CARD
+            # O master deve ser o container_cards. 
+            card = ctk.CTkFrame(container_cards, fg_color="#2b2b2b", corner_radius=10, border_width=1, border_color="#3d3d3d")
+            
+            # O SEGREDO: pack deve estar dentro do loop e com side="top"
+            # Removi o 'expand=True' que estava fazendo um card "comer" o espaço do outro
+            card.pack(pady=8, padx=10, fill="x", side="top", expand=False)
 
-                # O row[0] é o ID do registro no SQLite
-                id_log = row[0]
+           
+            # 2. TRATAMENTO DA DATA
+            data_banco = row["data_hora"] 
+            try:
+                data_formatada = datetime.strptime(data_banco, "%Y-%m-%d %H:%M:%S").strftime("%d/%m/%Y %H:%M")
+            except:
+                data_formatada = data_banco
 
-                def excluir_registro(id_especifico):
-                     conn = sqlite3.connect("smars_logs.db")
-                     cursor = conn.cursor()
-                     cursor.execute("DELETE FROM logs WHERE id = ?", (id_especifico,))
-                     conn.commit()
-                     conn.close()
-                     carregar_logs(container_cards) # Recarrega a lista automaticamente
+            # 3. EXIBIÇÃO DOS DADOS (Alinhados à esquerda 'w')
+            ctk.CTkLabel(card, text=f"DATA/HORA: {data_formatada}", font=("Segoe UI", 11), text_color="#1f538d").pack(anchor="w", padx=15)
+            
+            ctk.CTkLabel(card, text=str(row["sentimento"]).upper(), font=("Segoe UI", 19, "bold"), text_color="#ffffff").pack(anchor="w", padx=15)
 
-                # Pegamos a data do banco (2026-03-24 11:15) e invertemos para exibição
-                data_banco = row[1] 
-                try:
-                # Tenta converter o que veio do banco para o formato BR
-                    data_formatada = datetime.strptime(data_banco, "%Y-%m-%d %H:%M:%S").strftime("%d/%m/%Y %H:%M")
-                except:
-                # Se o dado antigo ainda estiver no formato BR, ele apenas usa o que já tem
-                    data_formatada = data_banco
+            ctk.CTkLabel(card, text=f"NÍVEL DE TELEMETRIA: {row['intensidade']}", font=("Segoe UI", 13), text_color="#aaaaaa").pack(anchor="w", padx=15, pady=(0, 5))
+            
+              # 4. LÓGICA DO STATUS (Identifica)
+            if row["identifica"] == 1:
+                txt_status = "● INPUT DIRETO"
+                cor_status = "#38CCC0" 
+            else:
+                txt_status = "● VARREDURA FÍSICA"
+                cor_status = "#F0FF1D"
 
-                ctk.CTkLabel(card, text=f"DATA/HORA: {data_formatada}", font=("Segoe UI", 11), text_color="#1f538d").pack(anchor="w", padx=15, pady=(10, 0))
-                ctk.CTkLabel(card, text=str(row[2]).upper(), font=("Segoe UI", 18, "bold"), text_color="#ffffff").pack(anchor="w", padx=15)
-                ctk.CTkLabel(card, text=f"NÍVEL DE TELEMETRIA: {row[3]}", font=("Segoe UI", 13), text_color="#aaaaaa").pack(anchor="w", padx=15, pady=(0, 10))
-                btn_del = ctk.CTkButton(card, text="EXCLUIR", width=30, height=30, fg_color="#444", hover_color="red", 
-                        command=lambda id_p=id_log: excluir_registro(id_p))
-                btn_del.pack(side="right", padx=10, pady=5)
+            lbl_status = ctk.CTkLabel(card, text=txt_status, font=("Consolas", 11, "bold"), text_color=cor_status)
+            lbl_status.pack(anchor="e", padx=15, pady=(5, 0))
 
+            # 5. FRAME DE AÇÕES (Para os botões ficarem lado a lado sem bugar o card)
+            frame_acoes = ctk.CTkFrame(card, fg_color="transparent")
+            frame_acoes.pack(fill="x", padx=10, pady=(5, 10))
+
+            # Captura o ID corretamente para o lambda não apagar o item errado
+            id_atual = row["id"]
+
+            btn_info = ctk.CTkButton(
+                frame_acoes, text="INFO", width=60, height=30,
+                command=lambda r=row: mostrar_detalhes(r["data_hora"], r["sentimento"], r["intensidade"], r["manejo"], master_window=janela)
+            )
+            btn_info.pack(side="left", padx=5)
+
+            # Botão Excluir usando uma função limpa para não bugar o SQLite
+            def acao_excluir(id_p=id_atual):
+                conn = sqlite3.connect("smars_logs.db")
+                cursor = conn.cursor()
+                cursor.execute("DELETE FROM logs WHERE id = ?", (id_p,))
+                conn.commit()
+                conn.close()
+                carregar_logs(container_cards, janela)
+
+            btn_del = ctk.CTkButton(
+                frame_acoes, text="EXCLUIR", width=60, height=30, fg_color="#444", hover_color="red",
+                command=acao_excluir
+            )
+            btn_del.pack(side="right", padx=5)
+
+        
         conn.close()
+        container_cards.update_idletasks() # Força o cálculo de geometria
     except Exception as e:
         print(f"Erro no banco: {e}")
 
 
+def mostrar_detalhes(data_banco, sentimento, nivel, manejo_texto,master_window=None ):
+    # Cria a janela com o tema escuro do SMARS
+    detalhes = ctk.CTkToplevel(master_window)
+    detalhes.title(f"TELEMETRIA: {sentimento.upper()}")
+    centralizar_janela(detalhes,500,600)
+    detalhes.attributes("-topmost", True)
+    detalhes.configure(fg_color="#1a1a1a")
+    detalhes.grab_set()
+
+    # Título estilizado
+    ctk.CTkLabel(detalhes, text="RELATÓRIO DE TELEMETRIA", 
+                 font=("Segoe UI", 22, "bold"), text_color="#1f538d").pack(pady=(25, 10))
+    
+    ctk.CTkLabel(detalhes, text=sentimento.upper(), 
+                 font=("Segoe UI", 22, "bold"), text_color="#307acf").pack(pady=(10, 5))
+
+    # Header com Nivel
+    header_frame = ctk.CTkFrame(detalhes, fg_color="transparent")
+    header_frame.pack(pady=2)
+
+    # Tratamento da Intensidade para garantir que a cor funcione
+    # Remove o "/10" se ele existir para poder converter para inteiro
+    nivel_limpo = str(nivel).split('/')[0]
+    
+    try:
+        valor_nivel = int(nivel_limpo)
+    except:
+        valor_nivel = 5 # Valor padrão caso ocorra erro na conversão
+
+    # Cor dinâmica para o nível
+    cor_nivel = "#2ecc71" if valor_nivel <= 3 else "#f1c40f" if valor_nivel <= 7 else "#e74c3c"
+    
+    ctk.CTkLabel(header_frame, text=f"NÍVEL {nivel_limpo}/10", 
+                 font=("Segoe UI", 12, "bold"), text_color=cor_nivel).pack(side="left")
+
+    # Pegamos a data do banco (2026-03-24 11:15) e invertemos para exibição
+    
+    try:
+    # Tenta converter o que veio do banco para o formato BR
+        data_formatada = datetime.strptime(data_banco, "%Y-%m-%d %H:%M:%S").strftime("%d/%m/%Y %H:%M")
+    except:
+    # Se o dado antigo ainda estiver no formato BR, ele apenas usa o que já tem
+        data_formatada = data_banco
+
+     # Header com data e hora
+    header_frame1 = ctk.CTkFrame(detalhes, fg_color="transparent")
+    header_frame1.pack(pady=2)
+    ctk.CTkLabel(header_frame1, text=f"{data_formatada}", font=("Segoe UI", 12), text_color="gray").pack(side="left")
+    
+    
+    # --- TRATAMENTO DO CONTEÚDO ---
+    # O .strip("()") remove parênteses das extremidades caso venha como string de tupla
+    conteudo_limpo = str(manejo_texto).strip("()").replace("'", "").replace(", ", "\n\n")
+    
+    # Caixa de texto estilizada para o relatório
+    txt = ctk.CTkTextbox(detalhes, width=420, height=300, font=("Segoe UI", 14),
+                         fg_color="#242424", border_color="#5c9ae0", border_width=2, corner_radius=15, wrap="word")
+    txt.pack(pady=20, padx=20)
+    
+    # Título interno da caixa
+    txt.insert("0.0", f"ANÁLISE DO SISTEMA\n\n{conteudo_limpo}")
+    txt.configure(state="disabled")
+
+    # Botão de fechar padrão
+    ctk.CTkButton(
+    detalhes, 
+    text="CONCLUIR", 
+    font=("Segoe UI", 13, "bold"),
+    fg_color="#1f538d", 
+    hover_color="#14375e", 
+    
+    # --- CONTROLE DE TAMANHO AQUI ---
+    width=200,    # Altere este valor para a largura que desejar (em pixels)
+    height=55,    # Altere este valor para a altura que desejar
+    # --------------------------------
+    
+    corner_radius=10, # Opcional: deixa o botão mais arredondado ou quadrado
+    command=detalhes.destroy
+).pack(pady=20)
+    
 
 def confirmar_limpeza_total(container_cards):
     def acao_deletar():
@@ -307,16 +552,17 @@ def confirmar_limpeza_total(container_cards):
     # Configuração da Janela de Confirmação
     janela_confirma = ctk.CTkToplevel()
     janela_confirma.title("CONFIRMAÇÃO CRÍTICA")
-    janela_confirma.geometry("450x350")
+    centralizar_janela(janela_confirma,450,350)
     janela_confirma.attributes("-topmost", True)
     janela_confirma.configure(fg_color="#1a1a1a")
+    janela_confirma.grab_set
 
     aviso = ("ESSA AÇÃO APAGARÁ TODO O HISTÓRICO DE SENTIMENTOS.\n\n"
              "ESSA AÇÃO NÃO PODERÁ SER DESFEITA.\n\n"
              "O HISTÓRICO DE SENTIMENTO NUNCA SERÁ RECUPERADO.")
     
     ctk.CTkLabel(janela_confirma, text=aviso, text_color="#e74c3c", 
-                 font=("Segoe UI", 13, "bold"), wraplength=500).pack(pady=30)
+                 font=("Segoe UI", 13, "bold"), wraplength=400).pack(pady=30)
 
     # Botão de exclusão (inicia desativado)
     btn_excluir = ctk.CTkButton(janela_confirma, text="APAGAR O HISTÓRICO", 
@@ -341,41 +587,15 @@ def confirmar_limpeza_total(container_cards):
     btn_excluir.pack(pady=20)
 
 
-# --- 2. FUNÇÃO QUE CRIA A INTERFACE ---
-def abrir_historico():
-    janela = ctk.CTkToplevel()
-    janela.title("SMARS - HISTÓRICO DE SENTIMENTOS")
-    janela.geometry("700x650")
-    janela.attributes("-topmost", True)
-    janela.configure(fg_color="#1a1a1a")
 
-    ctk.CTkLabel(janela, text="REGISTROS DE SENTIMENTOS", font=("Segoe UI", 24, "bold"), text_color="#1f538d").pack(pady=(20, 10))
 
-    frame_filtros = ctk.CTkFrame(janela, fg_color="transparent")
-    frame_filtros.pack(pady=10, padx=10, fill="x")
-
-    container_cards = ctk.CTkScrollableFrame(janela, width=550, height=400, fg_color="#242424", scrollbar_button_color="#1f538d", corner_radius=15)
-    container_cards.pack(pady=10, padx=20, fill="both", expand=True)
-
-    estilo_btn = {"width": 100, "height": 35, "font": ("Segoe UI", 12, "bold")}
-
-    # Os botões agora chamam a função de carga passando o container correto
-    ctk.CTkButton(frame_filtros, text="24 HORAS", command=lambda: carregar_logs(container_cards, 1), **estilo_btn).pack(side="left", padx=10, expand=True)
-    ctk.CTkButton(frame_filtros, text="7 DIAS", command=lambda: carregar_logs(container_cards, 7), **estilo_btn).pack(side="left", padx=10, expand=True)
-    ctk.CTkButton(frame_filtros, text="30 DIAS", command=lambda: carregar_logs(container_cards, 30), **estilo_btn).pack(side="left", padx=10, expand=True)
-    ctk.CTkButton(frame_filtros, text="TODOS", command=lambda: carregar_logs(container_cards), **estilo_btn).pack(side="left", padx=10, expand=True)
-    ctk.CTkButton(frame_filtros, text="EXCLUIR HISTÓRICO", command=lambda: confirmar_limpeza_total(container_cards),fg_color="#962d22",hover_color="#e74c3c",**estilo_btn).pack(side="left", padx=10, expand=True)
-
-    # Iniciar carregando os dados assim que abrir
-    carregar_logs(container_cards)
-
-    ctk.CTkButton(janela, text="CONCLUIR", font=("Segoe UI", 14, "bold"), fg_color="#d35400", hover_color="#a04000", height=45, command=janela.destroy).pack(side="bottom", pady=25)
 
 def abrir_explicacao_alexitimia():
     janela_alex = ctk.CTkToplevel()
     janela_alex.title("SMARS - O QUE É ALEXITIMIA?")
-    janela_alex.geometry("650x650")
+    centralizar_janela(janela_alex,650,650)
     janela_alex.attributes("-topmost", True)
+    janela_alex.grab_set()
 
     # 1. BOTÃO PRIMEIRO (side="bottom" reserva o espaço do rodapé antes de tudo)
     btn_voltar = ctk.CTkButton(
@@ -448,8 +668,9 @@ def abrir_explicacao_alexitimia():
 def abrir_conceito():
     janela = ctk.CTkToplevel()
     janela.title("SMARS - O QUE SÃO SENTIMENTOS?")
-    janela.geometry("650x650") 
+    centralizar_janela(janela,650,650) 
     janela.attributes("-topmost", True)
+    janela.grab_set()
 
     # Botão no fundo primeiro
     btn_sair = ctk.CTkButton(
@@ -522,8 +743,9 @@ def abrir_conceito():
 def abrir_comousar():
     janela = ctk.CTkToplevel()
     janela.title("SMARS - COMO USAR?")
-    janela.geometry("650x650") 
+    centralizar_janela(janela,650,650) 
     janela.attributes("-topmost", True)
+    janela.grab_set()
 
     # Botão no fundo primeiro
     btn_sair = ctk.CTkButton(
@@ -586,8 +808,9 @@ Após o envio do SENTIMENTO ou SENSAÇÕES, o SMARS atuará como  seu Driver de 
 def abrir_sobre_projeto():
     janela_sobre = ctk.CTkToplevel()
     janela_sobre.title("SMARS - SISTEMA DE MANEJO DE ALEXITIMIA E REEDUCAÇÃO SENTIMENTAL")
-    janela_sobre.geometry("650x650")
+    centralizar_janela(janela_sobre,650,650)
     janela_sobre.attributes("-topmost", True)
+    janela_sobre.grab_set()
 
     # Botão no fundo primeiro
     btn_voltar = ctk.CTkButton(
@@ -652,8 +875,9 @@ def abrir_sobre_projeto():
 def abrir_intuito():
     janela = ctk.CTkToplevel()
     janela.title("SMARS - ARQUITETURA OPERACIONAL")
-    janela.geometry("650x650") 
+    centralizar_janela(janela,650,650) 
     janela.attributes("-topmost", True)
+    janela.grab_set()
 
     # Botão no fundo primeiro
     btn_sair = ctk.CTkButton(
@@ -722,12 +946,70 @@ A tecnologia a serviço da autonomia do sentir."""
     caixa_texto.configure(state="disabled")
 
 
+def abrir_contato():
+    janela_contato = ctk.CTkToplevel()
+    janela_contato.title("SMARS - SUPORTE E CONTATO")
+    centralizar_janela(janela_contato, 500, 400) 
+    janela_contato.attributes("-topmost", True)
+    janela_contato.grab_set()
+    janela_contato.configure(fg_color="#1a1a1a")
+
+    # Título
+    ctk.CTkLabel(janela_contato, text="CENTRAL DE SUPORTE", 
+                 font=("Segoe UI", 20, "bold"), text_color="#1f538d").pack(pady=(30, 5))
+    
+    ctk.CTkLabel(janela_contato, text="BUGS, SUGESTÕES OU DÚVIDAS OPERACIONAIS", 
+                 font=("Segoe UI", 12), text_color="gray").pack(pady=(0, 20))
+
+    # Frame Central
+    info_frame = ctk.CTkFrame(janela_contato, fg_color="#242424", border_color="#1f538d", border_width=1)
+    info_frame.pack(padx=40, pady=(0,0), fill="x")
+
+    email_suporte = "SMARS.contato@outlook.com" # <--- e-mail aqui
+
+    ctk.CTkLabel(info_frame, text="E-MAIL OFICIAL:", 
+                 font=("Segoe UI", 11, "bold"), text_color="#5c9ae0").pack(pady=(15, 5))
+
+    # Campo de exibição do e-mail
+    display_email = ctk.CTkEntry(info_frame, width=300, height=35, justify="center",
+                                 fg_color="#1a1a1a", border_color="#333")
+    display_email.insert(0, email_suporte)
+    display_email.configure(state="readonly")
+    display_email.pack(pady=5)
+
+    # FUNÇÃO PARA COPIAR
+    def copiar_email():
+        janela_contato.clipboard_clear()
+        janela_contato.clipboard_append(email_suporte)
+        janela_contato.update() # Garante que o Windows registre a cópia
+        
+        # Feedback visual temporário no botão
+        btn_copiar.configure(text="E-MAIL COPIADO!", fg_color="#27ae60")
+        janela_contato.after(2000, lambda: btn_copiar.configure(text="COPIAR ENDEREÇO", fg_color="#333"))
+
+    # Botão de Copiar
+    btn_copiar = ctk.CTkButton(info_frame, text="COPIAR ENDEREÇO", font=("Segoe UI", 11, "bold"),
+                               fg_color="#333", hover_color="#444", width=150, height=30,
+                               command=copiar_email)
+    btn_copiar.pack(pady=(10, 20))
+
+    # Rodapé informativo
+    ctk.CTkLabel(janela_contato, text="Tempo de resposta de até 3 dias úteis.", 
+                 font=("Segoe UI", 15, "italic"), text_color="#555").pack(pady=(15,0))
+
+    # Botão Sair
+    ctk.CTkButton(janela_contato, text="VOLTAR", font=("Segoe UI", 13, "bold"),
+                  fg_color="#1f538d", hover_color="#14375e", width=180, height=35,
+                  command=janela_contato.destroy).pack(side="bottom", pady=(0,25))
+
+
 # --- INTERFACE PRINCIPAL (DASHBOARD) ---
 
 def criar_painel_principal():
     root = ctk.CTk() # Cria a janela principal do programa
     root.title("SMARS - Painel de Controle") # Nome da janela na barra superior
-    root.geometry("500x525") # Define o tamanho da janela (Largura x Altura)
+    centralizar_janela(root,500,500) # Define o tamanho da janela (Largura x Altura)
+    root.grab_set()
 
     # Título principal do Dashboard no topo da tela
     ctk.CTkLabel(root, text="SISTEMA DE MANEJO DE ALEXITIMIA E REEDUCAÇÃO SENTIMENTAL", font=("Segoe UI", 14, "bold")).pack(pady=30)
@@ -824,11 +1106,33 @@ def criar_painel_principal():
     )
     btn_alexi.grid(row=3, column=1, padx=15, pady=12)
 
-   
+    # Cria um 'Frame' (uma caixa invisível) para organizar o botão principal
+    frame_rodape = ctk.CTkFrame(root, fg_color="transparent")
+    frame_rodape.pack(pady=(0,0), padx=10, fill="both", expand=True)
 
+    # --- COMANDO DE CENTRALIZAÇÃO ---
+    # Esta linha abaixo é o segredo: ela dá "peso" à coluna 0, forçando-a a ocupar o centro do frame
+    frame_rodape.grid_columnconfigure(0, weight=1) 
+    # --------------------------------
 
-    # Texto de crédito no rodapé da janela
-    ctk.CTkLabel(root, text="2026 - Bianca L. Chelles", font=("Consolas", 10)).pack(side="bottom", pady=20)
+   # BOTÃO 8: CONTATO
+    btn_contato = ctk.CTkButton(
+        frame_rodape, text="INFORMAÇÕES DE CONTATO", 
+        width=160, height=25, # Aumentei um pouco a largura para ficar mais imponente
+        font=("Segoe UI", 10, "bold"), 
+        fg_color="#384452", # O azul oficial do SMARS
+        hover_color="#14375e", # Azul mais escuro ao passar o mouse
+        command=abrir_contato
+        
+    )
+    btn_contato.grid(row=0, column=0, padx=20, pady=(40,0)) 
+
+    ctk.CTkLabel(
+        frame_rodape, 
+        text="SMARS - 2026", 
+        font=("Consolas", 11),
+        text_color="gray" 
+        ).grid(row=1, column=0, padx=20, pady=(2, 10))
 
     root.mainloop() # Mantém o programa rodando
 # Ponto de entrada que inicia tudo
