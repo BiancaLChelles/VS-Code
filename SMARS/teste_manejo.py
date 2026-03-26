@@ -555,7 +555,7 @@ def confirmar_limpeza_total(container_cards):
     centralizar_janela(janela_confirma,450,350)
     janela_confirma.attributes("-topmost", True)
     janela_confirma.configure(fg_color="#1a1a1a")
-    janela_confirma.grab_set
+    janela_confirma.grab_set()
 
     aviso = ("ESSA AÇÃO APAGARÁ TODO O HISTÓRICO DE SENTIMENTOS.\n\n"
              "ESSA AÇÃO NÃO PODERÁ SER DESFEITA.\n\n"
