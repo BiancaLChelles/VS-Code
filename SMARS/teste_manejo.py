@@ -565,7 +565,7 @@ def confirmar_limpeza_total(container_cards):
                  font=("Segoe UI", 13, "bold"), wraplength=400).pack(pady=30)
 
     # Botão de exclusão (inicia desativado)
-    btn_excluir = ctk.CTkButton(janela_confirma, text="APAGAR O HISTÓRICO", 
+    btn_excluir = ctk.CTkButton(janela_confirma, text="APAGAR HISTÓRICO", 
                                  fg_color="#c0392b", hover_color="#962d22",
                                  state="disabled", command=acao_deletar,
                                  font=("Segoe UI", 12, "bold"), height=40)
@@ -578,7 +578,7 @@ def confirmar_limpeza_total(container_cards):
             btn_excluir.configure(state="disabled")
 
     check_var = ctk.StringVar(value="off")
-    check = ctk.CTkCheckBox(janela_confirma, text="Eu compreendo e desejo prosseguir", 
+    check = ctk.CTkCheckBox(janela_confirma, text="Compreendo e desejo prosseguir", 
                             variable=check_var, onvalue="on", offvalue="off", 
                             command=liberar_botao, font=("Segoe UI", 12),
                             fg_color="#1f538d", border_color="#1f538d")
