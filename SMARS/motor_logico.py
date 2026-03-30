@@ -25,9 +25,9 @@ def obter_relatorio(cat_match, intensidade, hora_atual_str):
     if cat_match == "medo":
         if intensidade >= 7: 
             return ("O sistema travou por excesso de ameaças detectadas.", 
-                    "O hardware identificou um risco real ou não e cortou a energia dos movimentos para ampliar a proteção.", 
-                    "Não force ação. Reduza luz, som e estímulos. Espere o sistema processar, equalizar e sinalizar segurança.", 
-                    "Paralisar, às vezes é defesa, não falha. DESCANSE!")
+                    "O hardware identificou um risco (real ou não) e cortou a energia dos movimentos para ampliar a proteção.", 
+                    "Não force nenhuma ação.\nReduza luz, som e estímulos. \nEspere o sistema processar, equalizar e sinalizar segurança.", 
+                    "Paralisar, às vezes, é defesa, não falha. DESCANSE!")
         else: 
             return ("Alerta de Hesitação / Bug Social.", 
                     "Sensor de ameaças focado na interpretação de outros usuários ou ambiente.", 
@@ -54,7 +54,7 @@ def obter_relatorio(cat_match, intensidade, hora_atual_str):
         else: 
             return ("Produtividade Elevada.", 
                     "Sistema otimizado para a tarefa atual.", 
-                    "Mantenha o scanner ligado para evitar exaustão precoce e salve o progresso.", 
+                    "Mantenha o scanner de cansaço ligado, quando detectar, PARE, para evitar exaustão precoce e salve o progresso.", 
                     "Bom trabalho. Evolua para a próxima fase.")
 
     elif cat_match == "looping":
