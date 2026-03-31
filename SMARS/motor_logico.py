@@ -29,9 +29,9 @@ def obter_relatorio(cat_match, intensidade, hora_atual_str):
                     "Não force nenhuma ação.\nReduza luz, som e estímulos. \nEspere o sistema processar, equalizar e sinalizar segurança.", 
                     "Paralisar, às vezes, é defesa, não falha. DESCANSE!")
         else: 
-            return ("Alerta de Hesitação / Bug Social.", 
-                    "Sensor de ameaças focado na interpretação de outros usuários ou ambiente.", 
-                    "As informações podem estar sendo processadas de forma corrompida agora. Você está seguro.", 
+            return ("Alerta de Hesitação ou Bug Social.", 
+                    "O sensor de ameaças está focado na interpretação de outros usuários ou ambiente.", 
+                    "As informações podem estar sendo processadas de forma corrompida agora. \nLembre-se, você está seguro!", 
                     "O ruído é apenas o medo. Mantenha o monitoramento.")
 
     elif cat_match == "raiva":
