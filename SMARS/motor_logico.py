@@ -37,8 +37,8 @@ def obter_relatorio(cat_match, intensidade, hora_atual_str):
     elif cat_match == "raiva":
         return ("Superaquecimento Crítico.", 
                 "Energia agressiva detectada buscando saída imediata após erro ou injustiça.", 
-                "Descarregue o excesso fisicamente (aperte algo, pule). Resfrie o sistema antes que ele queime os cabos.", 
-                "RESFRIE O SISTEMA! Não tome decisões com a CPU quente.")
+                "Descarregue o excesso fisicamente (aperte algo, pule).\n Resfrie o sistema antes que ele queime os cabos.", 
+                "Espere o sistema resfriar! Não tome decisões com a CPU quente.")
 
     elif cat_match == "hiperfoco":
         if h >= 21 or madrugada: 
