@@ -42,8 +42,8 @@ def obter_relatorio(cat_match, intensidade, hora_atual_str):
 
     elif cat_match == "hiperfoco":
         if h >= 21 or madrugada: 
-            return (f"Hiperfoco às {h}h (Risco de Insônia).", 
-                    "Uso prolongado de CPU em horário de baixa energia química. Essa produção pode custar caro amanhã.", 
+            return (f"Hiperfoco às {h}h trás risco de Insônia).", 
+                    "Uso prolongado de CPU em horário de baixa energia. Essa produção pode custar caro amanhã.", 
                     "Diminua a carga da atividade atual e inicie o planejamento mental de transição para o descanso.", 
                     "Gotham está segura! Você não é o Batman, vá descansar. VOCÊ NÃO É UM MORCEGO!")
         elif intensidade >= 7: 
