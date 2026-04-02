@@ -47,10 +47,10 @@ def obter_relatorio(cat_match, intensidade, hora_atual_str):
                     "Diminua a carga da atividade atual e inicie o planejamento mental de transição para o descanso.", 
                     "Gotham está segura! Você não é o Batman, vá descansar. VOCÊ NÃO É UM MORCEGO!")
         elif intensidade >= 7: 
-            return (f"Processador em 100% (Modo Túnel) às {h}h.", 
-                    "Atenção total em uma única tarefa, ignorando todos os alertas de manutenção do corpo.", 
-                    "Check de sede, fome, cansaço e postura agora! Agende alarmes para pausas.", 
-                    "Grandes poderes trazem grandes responsabilidades. SE ORGANIZE!")
+            return (f"Processador em 100% de procesamento (Modo Túnel Ativado) às {h}h.", 
+                    "A atenção total em uma única tarefa, faz com que ignoremos todos os alertas de manutenção do corpo.", 
+                    "Cerifique -se de fazer um check de sede, fome, cansaço e postura frequentemente! Agende alarmes para se lembrar das pausas.", 
+                    "Grandes poderes trazem grandes responsabilidades. \nSE ORGANIZE! SE CUIDE!")
         else: 
             return ("Produtividade Elevada.", 
                     "Sistema otimizado para a tarefa atual.", 
