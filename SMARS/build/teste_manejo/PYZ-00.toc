@@ -76,6 +76,10 @@
    'C:\\Program '
    'Files\\WindowsApps\\PythonSoftwareFoundation.Python.3.13_3.13.3312.0_x64__qbz5n2kfra8p0\\Lib\\codeop.py',
    'PYMODULE'),
+  ('contato_smars',
+   'C:\\Users\\Bianc\\OneDrive\\Área de Trabalho\\VS '
+   'Code\\SMARS\\contato_smars.py',
+   'PYMODULE'),
   ('contextlib',
    'C:\\Program '
    'Files\\WindowsApps\\PythonSoftwareFoundation.Python.3.13_3.13.3312.0_x64__qbz5n2kfra8p0\\Lib\\contextlib.py',
@@ -400,6 +404,10 @@
    'C:\\Program '
    'Files\\WindowsApps\\PythonSoftwareFoundation.Python.3.13_3.13.3312.0_x64__qbz5n2kfra8p0\\Lib\\hashlib.py',
    'PYMODULE'),
+  ('historico_smars',
+   'C:\\Users\\Bianc\\OneDrive\\Área de Trabalho\\VS '
+   'Code\\SMARS\\historico_smars.py',
+   'PYMODULE'),
   ('importlib',
    'C:\\Program '
    'Files\\WindowsApps\\PythonSoftwareFoundation.Python.3.13_3.13.3312.0_x64__qbz5n2kfra8p0\\Lib\\importlib\\__init__.py',
@@ -636,6 +644,14 @@
   ('tempfile',
    'C:\\Program '
    'Files\\WindowsApps\\PythonSoftwareFoundation.Python.3.13_3.13.3312.0_x64__qbz5n2kfra8p0\\Lib\\tempfile.py',
+   'PYMODULE'),
+  ('teste_manejo',
+   'C:\\Users\\Bianc\\OneDrive\\Área de Trabalho\\VS '
+   'Code\\SMARS\\teste_manejo.py',
+   'PYMODULE'),
+  ('textos_smars',
+   'C:\\Users\\Bianc\\OneDrive\\Área de Trabalho\\VS '
+   'Code\\SMARS\\textos_smars.py',
    'PYMODULE'),
   ('textwrap',
    'C:\\Program '

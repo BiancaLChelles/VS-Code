@@ -22,264 +22,270 @@ def obter_relatorio(cat_match, intensidade, hora_atual_str):
 
     # --- BLOCO DE MANEJOS DO EXOSQUELETO MENTAL ---
 
-    if cat_match == "medo":
-        if intensidade >= 7: 
-            return ("O sistema travou por excesso de ameaças detectadas.", 
-                    "O hardware identificou um risco (real ou não) e cortou a energia dos movimentos para ampliar a proteção.", 
-                    "Não force nenhuma ação.\nReduza luz, som e estímulos. \nEspere o sistema processar, equalizar e sinalizar segurança.", 
-                    "Paralisar, às vezes, é defesa, não falha. DESCANSE!")
-        else: 
-            return ("Alerta de Hesitação ou Bug Social.", 
-                    "O sensor de ameaças está focado na interpretação de outros usuários ou ambiente.", 
-                    "As informações podem estar sendo processadas de forma corrompida agora. \nLembre-se, você está seguro!", 
-                    "O ruído é apenas o medo. Mantenha o monitoramento.")
+    if cat_match == "ansiedade":
+        if intensidade >= 7:
+            return ("Crise de Ansiedade", 
+                    "Seu corpo disparou um alerta de perigo e enviou muita adrenalina para o sangue.", 
+                    "Toque em algo gelado. Respire fundo contando até quatro.", 
+                    "Isso é físico,não é um perigo real.\nVOCÊ ESTÁ EM SEGURANÇA!")
+        else:
+            return ("Ansiedade / Preocupação.", 
+                    "Sua mente está tentando prever muitas coisas ao mesmo tempo.", 
+                    "Foque apenas na tarefa mais importante de agora. Esqueça o resto por um momento.", 
+                    "Diminua as preocupações. Foque no agora.")
 
-    elif cat_match == "raiva":
-        return ("Superaquecimento Crítico.", 
-                "Energia agressiva detectada buscando saída imediata após erro ou injustiça.", 
-                "Descarregue o excesso fisicamente (aperte algo, pule).\n Resfrie o sistema antes que ele queime os cabos.", 
-                "Espere o sistema resfriar! Não tome decisões com a CPU quente.")
+    # --- BLOCO 2: SOBRECARGA SENSORIAL ---
+    elif cat_match == "sobrecarga":
+        if intensidade >= 6:
+            return ("Sobrecarga Sensorial", 
+                    "O ambiente tem informação demais (luz, som) e seu cérebro saturou.", 
+                    "Vá para um lugar escuro e silencioso imediatamente.", 
+                    "O silêncio é o seu remédio agora. Proteja seus sentidos.")
+        else:
+            return ("Desconforto Sensorial.", 
+                    "Você está percebendo ruídos ou luzes que estão começando a incomodar.", 
+                    "Use fones de ouvido ou diminua a luz.", 
+                    "Busque o conforto antes que o incômodo aumente.")
 
-    elif cat_match == "hiperfoco":
-        if h >= 21 or madrugada: 
-            return (f"Hiperfoco às {h}h trás risco de Insônia).", 
-                    "Uso prolongado de CPU em horário de baixa energia. Essa produção pode custar caro amanhã.", 
-                    "Diminua a carga da atividade atual e inicie o planejamento mental de transição para o descanso.", 
-                    "Gotham está segura! Você não é o Batman, vá descansar. VOCÊ NÃO É UM MORCEGO!")
-        elif intensidade >= 7: 
-            return (f"Processador em 100% de procesamento (Modo Túnel Ativado) às {h}h.", 
-                    "A atenção total em uma única tarefa, faz com que ignoremos todos os alertas de manutenção do corpo.", 
-                    "Cerifique -se de fazer um check de sede, fome, cansaço e postura frequentemente! Agende alarmes para se lembrar das pausas.", 
-                    "Grandes poderes trazem grandes responsabilidades. \nSE ORGANIZE! SE CUIDE!")
-        else: 
-            return ("Produtividade Elevada.", 
-                    "Sistema otimizado para a tarefa atual.", 
-                    "Mantenha o scanner de cansaço ligado, quando detectar, PARE, para evitar exaustão precoce e salve o progresso.", 
-                    "Bom trabalho. Evolua para a próxima fase.")
-
-    elif cat_match == "looping":
-        if madrugada or intensidade >= 7: 
-            return (f"Loop Crítico de Madrugada ({h}h).", 
-                    "A mente tenta reprocessar um erro antigo num horário de baixa energia química, gerando arquivos corrompidos.", 
-                    "O sistema não resolve problemas após as 0h. Beba água, force um reset físico (banho) e saia da tela.", 
-                    "Ficar rodando código com erro não conserta arquivo corrompido. VOLTE À REALIDADE!")
-        else: 
-            return ("Ruminação / Loop do Passado.", 
-                    "Tentando editar logs de eventos que já foram fechados (apenas leitura).", 
-                    "O passado é código apenas para leitura. Saia desse arquivo e mude para uma tarefa manual.", 
-                    "Pare de rodar um script que só retorna erro! Mude a programação.")
-
-    elif cat_match == "ansiedade":
-        if intensidade >= 7: 
-            return ("Pânico / Modo de Fuga Ativado.", 
-                    "O sistema detectou uma ameaça crítica e ativou descarga química total (fuga ou luta).", 
-                    "FOCO NO HARDWARE: Toque em algo gelado. Respire contando até 4. Volte para o presente.", 
-                    "Isso é uma descarga química, não é um fato real. VOCÊ ESTÁ SEGURO!")
-        else: 
-            return ("Muitas Abas Abertas / Ansiedade.", 
-                    "Excesso de processamento tentando prever múltiplas variáveis simultâneas.", 
-                    "Feche as tarefas secundárias. Foque apenas no que é vital para o sistema agora.", 
-                    "Reduza preocupações. Aumente o foco. O presente está aqui.")
-
-    elif cat_match == "tristeza":
-        if intensidade >= 7: 
-            return ("Tristeza Profunda / Sobrecarga de Pressão.", 
-                    "O reservatório emocional atingiu o limite crítico de carga.", 
-                    "Permita o choro. Busque um ambiente seguro e reduza a pressão externa.", 
-                    "Às vezes 'lavar' o sistema evita danos maiores. LIBERE A PRESSÃO!")
-        else: 
-            return ("Angústia Leve.", 
-                    "Existe um dado não processado sobre uma interação social ou acontecimento.", 
-                    "Tente escrever o que ficou pendente ou apenas observe os pensamentos sem julgamento.", 
-                    "Pequenos tópicos também precisam de processamento.")
-
-    elif cat_match == "sensorial":
-        if intensidade >= 6: 
-            return ("Agitação Sensorial Crítica.", 
-                    "O ambiente está enviando dados demais e o sistema está superaquecendo.", 
-                    "Use atividades corporais para liberar esta energia acumulada que esta querendo sair.\nOU\nMude para um lugar silencioso e escuro imediatamente, e aguarde seu sistema se estabilizar.", 
-                    "Se o excesso de estimulos sobregarrega, descarregar (da forma que preferir) pode ser a melhor resposta.")
-        else: 
-            return ("Agitação Moderada / Falha no Filtro.", 
-                    "O hardware está dando prioridade máxima para ruídos ou estímulos irrelevantes.", 
-                    "Reduza a carga de inputs. Use música de conforto ou diminua as luzes.", 
-                    "Filtro de ruídos em manutenção. Busque conforto.")
-
-    elif cat_match == "shutdown":
-        return ("Shutdown / Proteção de Hardware.", 
-                "O sistema se desligou do mundo externo para evitar danos permanentes (pico de energia).", 
-                "Não force o retorno. Fique em silêncio e escuro absoluto até o reset automático.", 
-                "Protocolos de segurança ativos. Aguarde o reset.")
-
-    elif cat_match == "dissociacao":
-        return ("Sinal de Wi-Fi Perdido / Dissociação.", 
-                "O hardware desconectou da base para se proteger de picos de energia ou traumas.", 
-                "Toque em texturas físicas. Sinta o peso do seu corpo. Tente se ater ao 'tato'.", 
-                "RECONECTANDO COM O CHÃO... Aguarde.")
-
-    elif cat_match == "burnout":
-        return ("CURTO-CIRCUITO TOTAL (Burnout).", 
-                "Placa-mãe superaquecida por uso prolongado acima da capacidade de processamento.", 
-                "DESLIGUE TUDO NA TOMADA. Isolamento e repouso total obrigatório por tempo indeterminado.", 
-                "MODO DE SEGURANÇA OBRIGATÓRIO. Não tente reiniciar agora.")
-
-    elif cat_match == "fome":
-        if hora_refeicao: 
-            return (f"Combustível Crítico ({h}h).", 
-                    "O sistema consumiu as energias e atingiu o horário previsto de reabastecimento.", 
-                    "Pausa obrigatória para nutrição. Priorize proteínas e carboidratos.", 
-                    "Sem combustível o motor para. ABASTEÇA-SE!")
-        else: 
-            return (f"Fome fora de hora ({h}h).", 
-                    "Gasto alto de CPU consumiu mais glicose que o esperado ou alimentação prévia insuficiente.", 
-                    "Busque um snack saudável para estabilizar o sistema de energia. Nutra-se.", 
-                    "Alimentação é sobre nutrição, não só mastigação. NUTRA-SE!")
-
-    elif cat_match == "sede":
-        return ("Hidratação Crítica.", 
-                "Falha nos sensores de hidratação. O motor está superaquecendo e colapsando.", 
-                "Pausa obrigatória para água. Hidrate os circuitos agora e nas próximas horas.", 
-                "Sem água, o sistema trava. HIDRATE-SE!")
-
-    elif cat_match == "cansaco":
-        if (h >= 18 or madrugada) or intensidade >= 7: 
-            return (f"Esgotamento de Fim de Dia ({h}h).", 
-                    "Capacitores sobrecarregados pelo excesso de estímulos diários. Hora do reset total.", 
-                    "Pare tudo, vá para o escuro. Inicie protocolo de sono profundo e silêncio.", 
-                    "Descanso é cuidado, não punição. CUIDE-SE!")
-        else: 
-            return (f"Cansaço Diurno ({h}h).", 
-                    "Superaquecimento precoce por excesso de estímulos ou sendo anterior de má qualidade.", 
-                    "Soneca de 15 min ou 15 min de silêncio total para resfriar a CPU.", 
-                    "Descanso também é progresso. Resfrie o sistema.")
-
-    elif cat_match == "stimming":
-        return ("Necessidade de Autorregulação.", 
-                "O corpo precisa de movimentos repetitivos para organizar o sistema nervoso.", 
-                "Não reprima. Use fidget toys ou movimentos naturais para equalizar a energia.", 
-                "Stimming é manutenção do sistema, não bug!")
-
+    # --- BLOCO 3: INÉRCIA EXECUTIVA ---
     elif cat_match == "inercia":
-        return ("Falha na Inicialização / Inércia.", 
-                "Dificuldade de converter comando mental em ação física. Muro invisível detectado.", 
-                "Execute micro-tarefas de 30 segundos. Dê um 'tranco' manual no motor.", 
-                "Dê um tranco no motor e saia da inércia.")
+        return ("Inércia Executiva", 
+                "Você sabe o que precisa fazer, mas o comando cérebro-corpo está falhando.", 
+                "Faça um movimento minúsculo: apenas levante a mão ou lave o rosto.", 
+                "Não pense na tarefa grande. Foque no primeiro micro-movimento.")
 
-    elif cat_match == "verbal": 
-        return ("Modo Não Verbal.", 
-                "Módulo de fala offline. A bateria zerou e o sistema cortou o áudio para poupar energia.", 
-                "Use escrita, gestos ou o silêncio. Não force a saída de áudio agora.", 
-                "Módulo de áudio em auto-recarga. Aguarde.")
+    # --- BLOCO 4: BURNOUT ---
+    elif cat_match == "burnout":
+        return ("Esgotamento (Burnout).", 
+                "Você operou acima do limite por muito tempo. O sistema parou por segurança.", 
+                "PARE TUDO. Você precisa de isolamento e repouso absoluto.", 
+                "Não se force. Seu corpo precisa de 'manutenção corretiva' agora.")
 
-    elif cat_match == "injustica":
-        return ("Bug de Justiça / Indignação Moral.", 
-                "Quebra de protocolos éticos externos detectada. Violação de lógica social.", 
-                "Você não é o admin do mundo. Foque no seu próprio código e ética agora.", 
-                "Foque no seu código. O mundo tem bugs que você não pode consertar.")
+    # --- BLOCO 5: RSD (REJEIÇÃO) ---
+    elif cat_match == "RSD":
+        return ("Sensibilidade à Rejeição (RSD).", 
+                "Uma crítica ou exclusão (real ou percebida) causou uma dor aguda.", 
+                "Respire. Isso é uma resposta intensa do seu sistema nervoso, não a realidade total.", 
+                "O que os outros pensam não define seu código interno. FIQUE CALMA.")
 
-    elif cat_match == "curiosidade":
-        return ("Modo Exploração Ativo.", 
-                "Desejo de novos dados. Seu processador está buscando atividade estimulante.", 
-                "Siga o fluxo da informação, pesquise e documente o que aprender.", 
-                "EXPANDINDO O BANCO DE DATOS. Sistema em evolução.")
+    # --- BLOCO 6: TRISTEZA ---
+    elif cat_match == "tristeza":
+        if intensidade >= 7:
+            return ("Tristeza Profunda", 
+                    "Seu cansaço emocional transbordou e precisa de vazão.", 
+                    "Tudo bem chorar. Procure um lugar seguro e fique em silêncio.", 
+                    "Chorar alivia a pressão interna. Deixe o sistema processar a dor.")
+        else:
+            return ("Angústia ou Tristeza Leve.", 
+                    "Existe um peso baixo incomodando o seu processamento.", 
+                    "Escreva o que sente ou ouça uma música que te valide.", 
+                    "Aceite o sentimento. Ele faz parte do seu humano.")
 
-    elif cat_match == "paz":
-        return ("Homeostase / Sistema Estável.", 
-                "Sensores em equilíbrio ideal. Baixa latência e silêncio interno.", 
-                "Registre esse estado. Aproveite a estabilidade para tarefas de baixa pressão.", 
-                "CONDIÇÕES IDEAIS. Sistema em ordem.")
-
-    elif cat_match == "rejeicao":
-        return ("Alerta de RSD (Sensibilidade à Rejeição).", 
-                "O sistema interpretou um input social como exclusão catastrófica.", 
-                "Verifique os fatos: existe prova real de rejeição ou é um erro de leitura do sensor? Saia do social por 10 min.", 
-                "A opinião alheia não altera seu código-fonte. ESTABILIZE-SE.")
-
-    elif cat_match == "empolgada":
-        return ("Pico de Dopamina / Sistema em Festa.", 
-                "Energia de recompensa em nível máximo. Grande chance de impulsividade.", 
-                "Aproveite a onda para tarefas difíceis, mas evite compras ou compromissos de longo prazo agora.", 
-                "SISTEMA EM ALTA. Use essa energia com inteligência!")
-
-    elif cat_match == "conexao":
-        return ("Sincronia de Sistema / Vínculo.", 
-                "O hardware encontrou um terminal compatível e o intercâmbio de dados é seguro.", 
-                "Permita o download de afeto. Valide a presença do outro e registre este log positivo.", 
-                "CONEXÃO ESTABELECIDA. O sistema não está sozinho.")
-
-    elif cat_match == "alivio":
-        return ("Tarefa Concluída / Limpeza de Cache.", 
-                "Uma carga pesada foi removida da fila de processamento. Tensão dissipada.", 
-                "Respire fundo e sinta o espaço livre no HD mental antes de carregar a próxima tarefa.", 
-                "LOG DE SUCESSO. Ufa!")
-
+    # --- BLOCO 7: AFETO ---
     elif cat_match == "afeto":
-        return ("Aquecimento de Núcleo / Ternura.", 
-                "Processamento de dados positivos sobre terceiros ou sobre si mesmo.", 
-                "Deixe a temperatura subir. Aproveite a sensação física sem tentar explicá-la logicamente.", 
-                "HARDWARE AQUECIDO COM SUCESSO. Sinta o carinho.")
+        return ("Estado de Afeto e Segurança.", 
+                "Você está sentindo uma conexão positiva e segura.", 
+                "Apenas sinta essa sensação no peito. Não precisa explicar.", 
+                "O afeto é a sua base de dados mais segura. Aproveite.")
 
+    # --- BLOCO 8: HIPERFOCO ---
+    elif cat_match == "hiperfoco":
+        if h >= 21 or madrugada:
+            return (f"Hiperfoco Noturno ({h}h).", 
+                    "Você está gastando energia vital quando deveria estar em standby.", 
+                    "Feche o notebook agora. Comece o ritual de sono.", 
+                    "Amanhã o código continuará lá. VÁ DESCANSAR!")
+        elif intensidade >= 8:
+            return ("Hiperfoco Intenso.", 
+                    "Você entrou em tunelamento e esqueceu do hardware (corpo).", 
+                    "PAUSE. Beba água, coma algo e verifique a postura.", 
+                    "Para criar bem, o hardware precisa de energia e água.")
+        else:
+            return ("Alta Produtividade", 
+                    "O fluxo de trabalho está bom e equilibrado.", 
+                    "Continue, mas monitore o cansaço.", 
+                    "Bom trabalho. Mantenha a atenção.")
+
+    # --- BLOCO 9: RAIVA ---
+    elif cat_match == "raiva":
+        return ("Raiva", 
+                "Há um excesso de voltagem querendo sair após detectar um erro ou injustiça.", 
+                "Libere a energia fisicamente (aperte algo, grite ou pule).", 
+                "ESPERE O RESFRIAMENTO. Não tome decisões sob alta tensão.")
+
+    # --- BLOCO 10: CONFUSÃO / OVERLOAD ---
     elif cat_match == "confusao":
-        return ("Erro de Processamento / Dados Fragmentados.", 
-                "Muitos inputs simultâneos ou instruções contraditórias recebidas.", 
-                "Pare a entrada de dados. Peça para repetirem devagar ou divida o problema em partes menores.", 
-                "CÉREBRO FRITO. Reinicie a explicação por partes.")
+        return ("Confusão Mental", 
+                "Muita informação simultânea travou o seu processamento.", 
+                "Pare de tentar entender. Peça silêncio ou faça uma coisa por vez.", 
+                "Seu cérebro está saturado. Vá por partes, devagar.")
 
-    elif cat_match == "frustracao":
-        return ("Loop de Erro / Impedimento de Execução.", 
-                "O comando foi enviado, mas o resultado esperado não foi atingido repetidas vezes.", 
-                "Mude de tarefa por 5 minutos. O sistema precisa limpar o erro antes de tentar novamente.", 
-                "NÃO FORCE O SCRIPT. Tente uma abordagem diferente depois.")
+    # --- BLOCO 11: MEDO ---
+    elif cat_match == "medo":
+        if intensidade >= 7:
+            return ("Medo Intenso", 
+                    "O corpo detectou ameaça e ativou o modo 'congelar'.", 
+                    "Não se force a agir. Reduza luz e espere o alerta baixar.", 
+                    "Paralisar é defesa. Respeite o tempo do seu sistema.")
+        else:
+            return ("Insegurança Social.", 
+                    "Você está em hipervigilância sobre o ambiente ou pessoas.", 
+                    "Lembre-se: você está em segurança agora. Foque na sua respiração.", 
+                    "É apenas um alerta falso de perigo. Observe com calma.")
 
-    elif cat_match == "solidao":
-        return ("Sinal de Rede Fraco / Isolamento.", 
-                "O sistema detectou falta de intercâmbio de dados sociais necessários para manutenção.", 
-                "Busque conexão com algo: um animal, uma música, ou envie uma mensagem curta para um terminal confiável.", 
-                "BUSCANDO REDE... Tente uma conexão segura.")
+    # --- BLOCO 12: SHUTDOWN ---
+    elif cat_match == "shutdown":
+        return ("Desligamento (Shutdown).", 
+                "Seu sistema nervoso 'desligou' para evitar um dano maior.", 
+                "Não tente falar ou agir. Fique em silêncio até a energia voltar.", 
+                "Você entrou em modo de proteção. O descanso é a única via.")
 
-    elif cat_match == "orgulho":
-        return ("Validação de Build / Conquista Própria.", 
-                "Reconhecimento interno de que o código rodou perfeitamente após esforço.", 
-                "Salve esse estado. Você superou bugs e entregou o resultado. Comemore.", 
-                "VERSÃO ESTÁVEL ALCANÇADA. Você é capaz!")
+    # --- BLOCO 13: DISSOCIAÇÃO ---
+    elif cat_match == "dissociacao":
+        return ("Desconexão (Dissociação).", 
+                "Você sente como se não estivesse totalmente no seu corpo.", 
+                "Toque em objetos, sinta o chão sob seus pés. Use o tato.", 
+                "Tente sentir o seu corpo novamente. Você está aqui.")
 
-    elif cat_match == "gratidao":
-        return ("Otimização de Logs Positivos.", 
-                "O sistema está focando nos recursos disponíveis em vez das falhas.", 
-                "Anote o motivo dessa gratidão para consultas em momentos de 'burnout' ou 'tristeza'.", 
-                "SISTEMA VALORIZADO. Continue assim.")
+    # --- BLOCO 14: PAZ / HOMEOSTASE ---
+    elif cat_match == "paz":
+        return ("Paz (Homeostase).", 
+                "Tudo está em equilíbrio e baixa latência.", 
+                "Aproveite o silêncio mental para atividades leves e descanso.", 
+                "Tudo está bem. Mantenha esse estado enquanto puder.")
 
-    elif cat_match == "culpa":
-        return ("Alerta de Erro Crítico Interno.", 
-                "O sistema está punindo o hardware por um log de evento passado.", 
-                "Analise: houve dano real? Se sim, tente o reparo. Se não, encerre esse processo repetitivo.", 
-                "REPARAÇÃO, NÃO PUNIÇÃO. Corrija o código e siga.")
+    # --- BLOCO 15: CULPA ---
+    elif cat_match == "vergonha":
+        return ("Culpa.", 
+                "Você sente que violou seu próprio código de conduta.", 
+                "Avalie: o erro pode ser corrigido? Se sim, planeje. Se não, atualize e siga.", 
+                "Se perdoe. Erros são dados para a próxima atualização.")
 
+    # --- BLOCO 16: TÉDIO ---
     elif cat_match == "tedio":
-        return ("Modo Ocioso / Falta de Estímulo.", 
-                "Baixa atividade na CPU gerando inquietação e busca por ruído.", 
-                "Inicie uma tarefa de 'curiosidade' ou uma manutenção física leve (limpeza) para gerar sinal.", 
-                "SISTEMA EM STANDBY. Busque um novo input.")
+        return ("Tédio.", 
+                "Seu cérebro está sem carga de processamento e busca estímulo.", 
+                "Busque um input de dopamina saudável: um hobby ou pequeno desafio.", 
+                "O tédio é perigoso para o hiperfoco. Escolha bem o próximo alvo.")
 
+    # --- BLOCO 17: VERGONHA ALHEIA ---
+    elif cat_match == "vergonha_alheia":
+        return ("Vergonha Alheia.", 
+                "Você presenciou um erro de conduta social de outra pessoa.", 
+                "Lembre-se: o comportamento do outro não está sob seu controle.", 
+                "Desconecte-se dessa situação. O mico não é seu.")
+
+   # --- BLOCO 18: FOME ---
+    elif cat_match == "fome":
+        return ("Fome.", 
+                "Seu corpo está ficando sem energia e isso altera seu humor.", 
+                "Pare um pouco e coma algo que você gosta agora.", 
+                "Comer vai te dar estabilidade. ABASTEÇA-SE.")
+
+    # --- BLOCO 19: SEDE ---
+    elif cat_match == "sede":
+        return ("Sede.", 
+                "Você esqueceu de beber água e seu cérebro está 'seco'.", 
+                "Beba pelo menos um copo de água agora.", 
+                "Água faz o sistema funcionar. HIDRATE-SE.")
+
+    # --- BLOCO 20: SONO / EXAUSTÃO ---
+    elif cat_match == "sono":
+        return ("Sono / Exaustão.", 
+                "Sua bateria acabou. Não adianta tentar forçar mais nada.", 
+                "Largue as telas e tarefas. Vá para a cama e feche os olhos.", 
+                "O descanso é a única solução. DURMA.")
+
+    # --- BLOCO 21: MELTDOWN ---
+    elif cat_match == "meltdown":
+        return ("Meltdown (Crise).", 
+                "Muita coisa acumulou e agora explodiu para fora.", 
+                "Vá para um lugar onde ninguém te veja. Chore, grite ou aperte algo forte.", 
+                "Não se culpe pela explosão. Apenas fique em segurança.")
+
+    # --- BLOCO 22: INJUSTIÇA ---
+    elif cat_match == "injustica":
+        return ("Sentimento de Injustiça.", 
+                "Você viu algo errado e isso dói como uma queimadura.", 
+                "Respire. Escreva o que aconteceu em um papel e jogue fora depois.", 
+                "Você não pode consertar tudo agora. Proteja sua paz.")
+
+    # --- BLOCO 23: SOLIDÃO ---
+    elif cat_match == "solidao":
+        return ("Solidão.", 
+                "Você sente que está em uma ilha e ninguém te vê.", 
+                "Mande um 'oi' para alguém que você ama ou ouça sua música favorita.", 
+                "Você não está sozinha no mundo. Eu estou aqui com você.")
+
+    # --- BLOCO 24: NÃO-VERBAL ---
+    elif cat_match == "nao_verbal":
+        return ("Estado Não-Verbal.", 
+                "As palavras sumiram e falar parece impossível ou cansativo.", 
+                "Não force a fala. Use gestos ou escreva o que precisa.", 
+                "Tudo bem ficar em silêncio. O mundo pode esperar.")
+
+    # --- BLOCO 25: ORGULHO / SUCESSO ---
+    elif cat_match == "orgulho":
+        return ("Orgulho / Sucesso!", 
+                "Você conseguiu! Aquela tarefa difícil foi finalizada.", 
+                "Sorria e aproveite essa sensação de dever cumprido.", 
+                "Você é incrível. GUARDE ESSA VITÓRIA!")
+
+    # --- BLOCO 26: GRATIDÃO ---
+    elif cat_match == "gratidao":
+        return ("Gratidão.", 
+                "Algo bom aconteceu e seu coração está quentinho.", 
+                "Apenas sinta esse bem-estar e agradeça mentalmente.", 
+                "Coisas boas também acontecem. Aproveite o momento.")
+
+    # --- BLOCO 27: ECOLALIA ---
+    elif cat_match == "ecolalia":
+        return ("Ecolalia (Repetição).", 
+                "Sua mente viciou em um som ou frase para se acalmar.", 
+                "Deixe o som sair. Repita quantas vezes precisar.", 
+                "Isso ajuda seu cérebro a entrar nos eixos. Repita.")
+
+    # --- BLOCO 28: MAL-ESTAR FÍSICO ---
     elif cat_match == "mal_estar":
-        return ("Alerta Geral de Sensores Físicos.", 
-                "O hardware reporta instabilidade não específica (náusea ou tontura).", 
-                "Sente-se ou deite-se. Verifique temperatura e respiração. O sistema precisa de repouso físico imediato.", 
-                "MODO DE PRESERVAÇÃO FÍSICA. Vá com calma.")
+        return ("Mal-estar Físico.", 
+                "Seu corpo está avisando que algo não vai bem.", 
+                "Deite-se um pouco e veja se precisa de algum remédio ou repouso.", 
+                "Escute o seu corpo. Ele precisa de cuidado agora.")
 
-    elif cat_match == "dor_cabeca":
-        return ("Pressão Interna no Processador.", 
-                "Carga excessiva de luz, som ou processamento mental gerando dor física.", 
-                "Escuro, silêncio e hidratação. Desligue as telas imediatamente.", 
-                "LIMITE DE PROCESSAMENTO ATINGIDO. Desligue os monitores.")
+    # --- BLOCO 29: DOR DE CABEÇA ---
+    elif cat_match == "dor_de_cabeca":
+        return ("Dor de Cabeça / Enxaqueca.", 
+                "Há muita pressão e barulho na sua cabeça agora.", 
+                "Vá para o escuro, beba água e fique em silêncio absoluto.", 
+                "PARE TUDO. Sua saúde vem primeiro que qualquer código.")
 
+    # --- BLOCO 31: NOJO / AVERSÃO ---
     elif cat_match == "nojo":
-        return ("Rejeição de Input Sensorial.", 
-                "O sensor detectou uma textura, cheiro ou ideia incompatível com o sistema.", 
-                "Afaste-se do estímulo. Lave o que for necessário. Respeite o limite do seu hardware.", 
-                "TEXTURA INVÁLIDA. Remova o objeto do ambiente.")
+        return ("Nojo ou Aversão.", 
+                "Algo perto de você está te incomodando muito.", 
+                "Saia de perto do que está te fazendo mal. Limpe seus sentidos.", 
+                "Seu corpo está te protegendo. Afaste-se.")
 
-    return ("Sinal não identificado.", 
-            f"Um novo estado foi detectado às {h}h, mas ainda não possui um manual específico.", 
-            "Observe os sintomas físicos e anote para criarmos um novo 'case' no futuro.", 
-            "Continue aprendendo sobre seu sistema. VAMOS IDENTIFICAR ESSE BUG!")
+    # --- BLOCO 32: CURIOSIDADE ---
+    elif cat_match == "curiosidade":
+        return ("Curiosidade!", 
+                "Você descobriu algo novo e quer entender tudo sobre isso.", 
+                "Vá em frente! Pesquise, leia e descubra coisas novas.", 
+                "Aprender é a sua diversão. SIGA O INTERESSE.")
+
+    # --- BLOCO 33: STIMMING ---
+    elif cat_match == "stimming":
+        return ("Stimming (Movimento).", 
+                "Você precisa se mexer para aguentar o que está sentindo.", 
+                "Balance as mãos, pule ou balance o corpo. Sinta o movimento.", 
+                "O movimento é o seu alívio. Solte a energia.") 
+
+   #espaço para futuras categorias...
+
+    # --- CASO PADRÃO ---
+    else: 
+        cat_match = "Sinal Desconhecido"
+        return ("Sentimento em Análise.", 
+            "O SMART identificou essa interação como um caso novo.", 
+            "Observe as sensações físicas, tente descreve-las e anote.", 
+            "Ainda estamos mapeando alguns casos. \nVamos resolver esse juntos?\nEntre em contato e compartilhe seu caso conosco!")

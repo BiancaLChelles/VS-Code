@@ -1,0 +1,36 @@
+[17:57:41] ENTRADA: ...........
+------------------------------
+[18:17:18] ENTRADA: to com o olhar pesado, to cansada, meu corpo ta pesado
+------------------------------
+[18:17:41] ENTRADA: olhar pesado
+------------------------------
+[18:17:54] ENTRADA: olhos pesando
+------------------------------
+[18:18:11] ENTRADA: mãos agitadas, flapping
+------------------------------
+[18:20:13] ENTRADA: olhos pesando, corpo pesando, to cansada
+------------------------------
+[18:28:11] ENTRADA: mãos agitadas
+------------------------------
+[18:28:30] ENTRADA: mãos agitadas
+------------------------------
+[18:28:40] ENTRADA: flapping
+------------------------------
+[18:30:17] ENTRADA: mãos agitadas
+------------------------------
+[18:31:36] ENTRADA: tava pesquisnato e fiquei curiosa como funciona as coisas, to investigando quero descobrir tudo
+------------------------------
+[18:33:38] ENTRADA: mãos agitadas, flapping
+------------------------------
+[19:07:18] ENTRADA: mãos agiatadas
+------------------------------
+[19:07:53] ENTRADA: flapping, mãos agitadas
+------------------------------
+[19:08:24] ENTRADA: eu consehi fazer, eu to orguklhosa
+------------------------------
+[19:11:03] ENTRADA: mãos agiatadas, flapping
+------------------------------
+[19:26:58] ENTRADA: meus olhos estão pesados, to cansada, meu corpor ta pesado, to com sono
+------------------------------
+[19:27:51] ENTRADA: olhos pesando, corpo pesado, to com sono
+------------------------------
