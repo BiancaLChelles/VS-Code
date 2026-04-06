@@ -322,50 +322,44 @@ def processar_final(entrada_usuario, tipo_fluxo):
         intensidade = 7  
         identifica = False
 
-        # 2. PONTE DE CATEGORIAS (Mantenha as chaves LIMPAS para bater com o tradutor)
+        # 2. PONTE DE CATEGORIAS 
+
         ponte_categorias = {
-           # --- Biológicos ---
-            "fome": "fome", 
-            "sede": "sede", 
-            "sono": "sono",
-            "mal_estar": "mal_estar", 
-            "dor_cabeca": "dor_cabeca",
-            
-            # --- Crises e Regulação ---
-            "meltdown": "Meltdown", 
-            "shutdown": "shutdown",
-            "sensorial": "sensorial", 
-            "dissociacao": "dissociacao", 
-            "nao_verbal": "nao_verbal",
-            "stimming": "stimming",
-            "ecolalia": "ecolalia",
-            
-            # --- Cognitivo e Execução ---
-            "inercia": "inercia", 
-            "hiperfoco": "hiperfoco", 
-            "burnout": "burnout",
-            "confusao": "confusao", 
-            "tedio": "tedio",          # <--- ADICIONADO
-            "curiosidade": "curiosidade",
-            
-            # --- Sociais e Complexos ---
-            "rejeicao": "rejeicao", 
-            "injustica": "injustica", 
-            "solidao": "solidao", 
-            "vergonha": "vergonha",    # <--- ADICIONADO
-            "vergonha_alheia": "vergonha_alheia", # <--- ADICIONADO
-            "orgulho": "orgulho", 
-            "gratidao": "gratidao", 
-            
-            # --- Emoções Base ---
-            "ansiedade": "ansiedade", 
-            "tristeza": "tristeza", 
-            "afeto": "afeto",
-            "raiva": "raiva", 
-            "medo": "medo", 
-            "frustracao": "frustracao", # <--- ADICIONADO
-            "paz": "paz", 
-            "nojo": "nojo"
+          "ansiedade": "ansiedade",
+        "sobrecarga": "sensorial",
+        "inercia": "inercia",
+        "burnout": "burnout",
+        "rsd": "rsd",
+        "tristeza": "tristeza",
+        "afeto": "afeto",
+        "hiperfoco": "hiperfoco",
+        "raiva": "raiva",
+        "confusao": "confusao",
+        "medo": "medo",
+        "shutdown": "shutdown",
+        "dissociacao": "dissociacao",
+        "paz": "paz",
+        "vergonha": "vergonha",
+        "tedio": "tedio",
+        "vergonha_alheia": "vergonha_alheia",
+        "fome": "fome",
+        "sede": "sede",
+        "sono": "sono",
+        "meltdown": "Meltdown",
+        "injustica": "injustica",
+        "solidao": "solidao",
+        "nao_verbal": "nao_verbal",
+        "orgulho": "orgulho",
+        "gratidao": "gratidao",
+        "ecolalia": "ecolalia",
+        "mal_estar": "mal_estar",
+        "dor_de_cabeca": "dor_de_cabeca",
+        "alivio": "alivio",
+        "nojo": "nojo",
+        "curiosidade": "curiosidade",
+        "stimming": "stimming",
+        "alegria" : "alegria",
+        "luto": "luto"
         
         }
         

@@ -62,7 +62,7 @@ def obter_relatorio(cat_match, intensidade, hora_atual_str):
                 "Não se force. Seu corpo precisa de 'manutenção corretiva' agora.")
 
     # --- BLOCO 5: RSD (REJEIÇÃO) ---
-    elif cat_match == "RSD":
+    elif cat_match == "rsd":
         return ("Sensibilidade à Rejeição (RSD).", 
                 "Uma crítica ou exclusão (real ou percebida) causou uma dor aguda.", 
                 "Respire. Isso é uma resposta intensa do seu sistema nervoso, não a realidade total.", 
@@ -258,6 +258,13 @@ def obter_relatorio(cat_match, intensidade, hora_atual_str):
                 "Há muita pressão e barulho na sua cabeça agora.", 
                 "Vá para o escuro, beba água e fique em silêncio absoluto.", 
                 "PARE TUDO. Sua saúde vem primeiro que qualquer código.")
+    
+    # --- BLOCO 30: ALÍVIO ---
+    elif cat_match == "alivio":
+        return ("Alívio.", 
+                "Uma carga de tensão ou uma tarefa pendente foi concluida.", 
+                "Respire fundo e sinta o relaxamento, não vá direto para a próxima tarefa.", 
+                "O peso sumiu. Permita-se saborear a leveza antes de reiniciar.")
 
     # --- BLOCO 31: NOJO / AVERSÃO ---
     elif cat_match == "nojo":
@@ -275,10 +282,24 @@ def obter_relatorio(cat_match, intensidade, hora_atual_str):
 
     # --- BLOCO 33: STIMMING ---
     elif cat_match == "stimming":
-        return ("Stimming (Movimento).", 
-                "Você precisa se mexer para aguentar o que está sentindo.", 
+        return ("Stimming (Regulação).", 
+                "Você precisa se mexer para processar o que está sentindo.", 
                 "Balance as mãos, pule ou balance o corpo. Sinta o movimento.", 
-                "O movimento é o seu alívio. Solte a energia.") 
+                "O movimento é alívio. Libere a energia.") 
+
+    # --- BLOCO 34: ALEGRIA ---
+    elif cat_match == "alegria":
+        return ("Alegria.", 
+                "Você está se sentindo bem e positivo.", 
+                "Aproveite esse momento de felicidade.", 
+                "Sinta o calor e paz da alegria.") 
+    
+    # --- BLOCO 35: LUTO ---
+    elif cat_match == "luto":
+        return ("Luto.", 
+                "Você está processando uma perda e sentindo tristeza.", 
+                "Permita-se chorar e sentir esse momento. É normal e importante.", 
+                "O tempo cura. Cuide do seu coração.")     
 
    #espaço para futuras categorias...
 

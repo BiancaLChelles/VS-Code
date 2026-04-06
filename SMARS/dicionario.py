@@ -24,39 +24,77 @@ def carregar_banco():
     
     # Base inicial (Sincronizada)
     banco_inicial = {
-        "medo": ["medo", "assustado", "receio", "ameaca", "frio na barriga", "vigilante"],
-        "hiperfoco": ["hiperfoco", "focado", "obcecado", "nao consigo parar", "eletrizado"],
-        "looping": ["ruminacao", "looping", "mente presa", "repetitivo", "frase na cabeca", "ecolalia"],
-        "shutdown": ["shutdown", "olhar morto", "olhar fixo", "travado", "desligado"],
-        "tristeza": ["triste", "angustia", "no na garganta", "vontade de chorar", "choro preso"],
-        "ansiedade": ["ansiedade", "peito apertado", "coracao acelerado", "falta de ar", "tremendo", "panico"],
-        "sensorial": ["barulho", "luz", "agitacao sensorial", "muito som", "etiqueta incomodando", "meltdown", "sobrecarga"],
-        "verbal": ["nao verbal", "mudo", "sem fala", "nao consigo falar"],
-        "inercia": ["inercia", "nao consigo comecar", "preso no sofa", "muro invisivel"],
-        "fome": ["fome", "estomago vazio", "estomago roncando", "fraco", "querendo comer"],
-        "sede": ["sede", "agua", "boca seca", "garganta seca"],
-        "cansaco": ["cansado", "exausto", "energia baixa", "bateria fraca", "sono", "exaustao"],
-        "injustica": ["injustica", "errado", "mentira", "falta de logica", "revoltado", "angustia etica"],
-        "rejeicao": ["rsd", "ele me odeia", "rejeitado", "excluido", "mico", "vergonha"],
-        "empolgada": ["empolgado", "animado", "dopamina", "uhu", "venci", "empolgacao"],
-        "paz": ["paz", "calma", "tranquilo", "zen", "sereno", "leve"],
-        "conexao": ["conexao", "compreendido", "acolhido", "amado", "presenca"],
-        "alivio": ["alivio", "tirei um peso", "ufa", "concluido"],
-        "dissociacao": ["fora do corpo", "nevoeiro", "nuvem", "distante", "mundo de vidro", "dissociacao"],
-        "burnout": ["esgotamento", "fim da linha", "acabou a bateria", "morto por dentro", "burnout"],
-        "afeto": ["coracao quente", "borboletas no estomago", "carinho", "ternura", "afeto"],
-        "raiva": ["odio", "mandibula presa", "punhos fechados", "querendo gritar", "raiva"],
-        "confusao": ["nao entendi", "cerebro frito", "perdido", "muita coisa", "confusao"],
-        "frustracao": ["nao da certo", "estagnado", "impotente", "desisto", "frustracao"],
-        "solidao": ["sozinho", "isolado", "vazio", "invisivel", "solidao"],
-        "orgulho": ["consegui", "fiz sozinho", "capaz", "orgulhoso", "orgulho"],
-        "gratidao": ["obrigado", "grato", "ainda bem", "valorizar", "gratidao"],
-        "culpa": ["nao devia", "peso na consciencia", "arrependido", "remorso", "culpa"],
-        "tedio": ["chato", "sem nada", "inquieto de tédio", "tempo nao passa", "tedio"],
-        "mal_estar": ["enjoo", "tontura", "dor no corpo", "indisposto", "mal estar"],
-        "dor_cabeca": ["pressao nos olhos", "cabeca explodindo", "martelada", "dor de cabeca"],
-        "nojo": ["ascom", "ecat", "gosmento", "textura ruim", "nojo"],
-        "curiosidade": ["quero saber", "como funciona", "interessado", "descobrir", "curiosidade"]
+
+    "ansiedade": ["ansiedade", "ansioso", "ansiosa", "ansiose", "aflicao", "agonia", "apreensivo", "apreensiva", "apreensive", "panico"],
+
+    "sobrecarga": ["sobrecarga", "overload", "saturado", "saturada", "saturade", "irritabilidade", "cheio", "cheia", "cheie", "sensorial"],
+
+    "inercia": ["inercia", "muro invisivel", "paralisado", "paralisada", "paralisade", "bloqueado", "bloqueada", "bloqueade"],
+
+    "burnout": ["burnout", "esgotamento", "estafado", "estafada", "estafade", "fim da linha", "exaustao mental"],
+
+    "rsd": ["rsd", "rejeitado", "rejeitada", "rejeitade", "excluido", "excluida", "excluide", "mico", "vergonha", "sensibilidade a rejeicao","rejeicao"],
+
+    "tristeza": ["triste", "tristeza", "angustia", "melancolico", "melancolica", "melancolice", "desanimado", "desanimada", "desanimade"],
+
+    "afeto": ["afeto", "carinho", "ternura", "querido", "querida", "queride", "amoroso", "amorosa", "amorose", "amado", "amada", "amade"],
+
+    "hiperfoco": ["hiperfoco", "hiperfocada", "hiperfocado", "hiperfocade", "focado", "focada", "focade", "obcecado", "obcecada", "obcecade", "eletrizado", "eletrizada", "eletrizade"],
+
+    "raiva": ["raiva", "odio", "furioso", "furiosa", "furiose", "bravo", "brava", "brave", "puto", "puta", "pute", "irritado", "irritada", "irritade"],
+
+    "confusao": ["confuso", "confusa", "confuse", "desorientado", "desorientada", "desorientade", "perdido", "perdida", "perdide", "atordoado", "atordoada", "atordoade"],
+
+    "medo": ["medo", "pavor", "temor", "assustado", "assustada", "assustade", "receio", "ameaca", "vigilante", "acuado", "acuada", "acuade"],
+
+    "shutdown": ["shutdown", "desligado", "desligada", "desligade", "travado", "travada", "travade", "apagão", "indiferente"],
+
+    "dissociacao": ["dissociacao", "desconectado", "desconectada", "desconectade", "distante", "mundo de vidro", "fora do corpo"],
+
+    "paz": ["paz", "calma", "tranquilo", "tranquila", "tranquile", "sereno", "serena", "serene", "leve", "relaxado", "relaxada", "relaxade"],
+
+    "vergonha": ["vergonha", "envergonhado", "envergonhada", "envergonhade", "timidez", "humilhacao", "exposto", "exposta", "exposte","culpa"],
+
+    "tedio": ["tedio", "entediado", "entediada", "entediade", "subestimulado", "subestimulada", "subestimulade", "desinteresse"],
+
+    "vergonha_alheia": ["vergonha alheia", "constrangimento", "desconforto social", "mico alheio"],
+
+    "fome": ["fome", "faminto", "faminta", "faminte", "esfomeado", "esfomeada", "esfomeade", "vazio no estomago"],
+
+    "sede": ["sede", "sedento", "sedenta", "sedente", "desidratado", "desidratada", "desidratade", "boca seca"],
+
+    "sono": ["sono", "sonolento", "sonolenta", "sonolente", "cansaco", "exausto", "exausta", "exhauste", "esgotado", "esgotada", "esgotade"],
+
+    "meltdown": ["meltdown", "explosao", "descontrole", "crise sensorial", "sobrecarga extrema"],
+
+    "injustica": ["injustica", "revoltado", "revoltada", "revoltade", "indignado", "indignada", "indignade", "angustia etica"],
+
+    "solidao": ["solidao", "sozinho", "sozinha", "sozinhe", "isolado", "isolada", "isolade", "invisivel"],
+
+    "nao_verbal": ["nao verbal", "mudo", "muda", "mude", "sem fala", "silencioso", "silenciosa", "silenciose", "dificuldade em falar"],
+
+    "orgulho": ["orgulho", "orgulhoso", "orgulhosa", "orgulhose", "capaz", "vitorioso", "vitoriosa", "vitoriose", "realizado", "realizada", "realizade"],
+
+    "gratidao": ["gratidao", "grato", "grata", "grate", "agradecido", "agradecida", "agradecide"],
+
+    "ecolalia": ["ecolalia", "looping", "ruminacao", "repetitivo", "repetitiva", "repetitive", "frase na cabeca", "mente presa"],
+
+    "mal_estar": ["mal estar", "indisposto", "indisposta", "indisposte", "enjoado", "enjoada", "enjoade", "nausea"],
+
+    "dor_de_cabeca": ["dor de cabeca", "enxaqueca", "cefaleia", "pressao na cabeca"],
+
+    "alivio": ["alivio", "descarregado", "descarregada", "descarregade", "concluido", "concluida", "concluide", "descanso"],
+
+    "nojo": ["nojo", "aversao", "repulsa", "enojado", "enojada", "enojade", "asco"],
+
+    "curiosidade": ["curiosidade", "interessado", "interessada", "interessade", "curioso", "curiosa", "curiose", "investigativo"],
+
+    "stimming": ["stimming", "autorregulacao", "estimulacao", "balanco", "movimento repetitivo", "agito"],
+
+    "alegria": ["alegria", "felicidade","feliz", "feliza", "felize", "contente", "contente", "contente", "euforico", "euforica", "euforice", "radiante"],
+
+    "luto": ["luto", "perda", "tristeza profunda", "choro", "sofrimento", "processando a perda"]
+    
     }
     salvar_banco(banco_inicial)
     return banco_inicial
