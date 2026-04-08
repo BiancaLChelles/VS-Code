@@ -24,78 +24,79 @@ def carregar_banco():
     
     # Base inicial (Sincronizada)
     banco_inicial = {
+        
+    "ansiedade": ["ansiedade", "ansioso", "ansiosa", "ansiose", "aflicao", "agonia", "apreensivo", "apreensiva", "apreensive", "panico", "ansiedade", "anciedade", "ancioso", "anciosa", "afliçao", "aflição", "afliçao", "apreencivo", "apreenciva", "panico", "pânico"],
 
-    "ansiedade": ["ansiedade", "ansioso", "ansiosa", "ansiose", "aflicao", "agonia", "apreensivo", "apreensiva", "apreensive", "panico"],
+    "sobrecarga": ["sobrecarga", "overload", "saturado", "saturada", "saturade", "irritabilidade", "cheio", "cheia", "cheie", "sensorial", "sobrecargu", "sobercarga", "saturadu", "saturadx", "sensurial", "irritabelidade"],
 
-    "sobrecarga": ["sobrecarga", "overload", "saturado", "saturada", "saturade", "irritabilidade", "cheio", "cheia", "cheie", "sensorial"],
+    "inercia": ["inercia", "muro invisivel", "paralisado", "paralisada", "paralisade", "bloqueado", "bloqueada", "bloqueade", "inerçia", "inércia", "paralizado", "paralizada", "paralizado", "bloquado", "muro invizivel"],
 
-    "inercia": ["inercia", "muro invisivel", "paralisado", "paralisada", "paralisade", "bloqueado", "bloqueada", "bloqueade"],
+    "burnout": ["burnout", "esgotamento", "estafado", "estafada", "estafade", "fim da linha", "exaustao mental", "burnalt", "burnot", "esgotamentu", "exaustão", "exaustao", "exaustao"],
 
-    "burnout": ["burnout", "esgotamento", "estafado", "estafada", "estafade", "fim da linha", "exaustao mental"],
+    "rsd": ["rsd", "rejeitado", "rejeitada", "rejeitade", "excluido", "excluida", "excluide", "mico", "vergonha", "sensibilidade a rejeicao", "rejeicao", "rejaitado", "rejaitada", "excluidu", "rejeiçao", "rejeição"],
 
-    "rsd": ["rsd", "rejeitado", "rejeitada", "rejeitade", "excluido", "excluida", "excluide", "mico", "vergonha", "sensibilidade a rejeicao","rejeicao"],
+    "tristeza": ["triste", "tristeza", "angustia", "melancolico", "melancolica", "melancolice", "desanimado", "desanimada", "desanimade", "tristre", "tristesa", "angústia", "angustia", "desanimadu"],
 
-    "tristeza": ["triste", "tristeza", "angustia", "melancolico", "melancolica", "melancolice", "desanimado", "desanimada", "desanimade"],
+    "afeto": ["afeto", "carinho", "ternura", "querido", "querida", "queride", "amoroso", "amorosa", "amorose", "amado", "amada", "amade", "afetu", "carinhu", "amorosu", "queridu"],
 
-    "afeto": ["afeto", "carinho", "ternura", "querido", "querida", "queride", "amoroso", "amorosa", "amorose", "amado", "amada", "amade"],
+    "hiperfoco": ["hiperfoco", "hiperfocada", "hiperfocado", "hiperfocade", "focado", "focada", "focade", "obcecado", "obcecada", "obcecade", "eletrizado", "eletrizada", "eletrizade", "hiper fodo", "iperfoco", "focadu", "obsecado", "obsecada", "eletrizadu"],
 
-    "hiperfoco": ["hiperfoco", "hiperfocada", "hiperfocado", "hiperfocade", "focado", "focada", "focade", "obcecado", "obcecada", "obcecade", "eletrizado", "eletrizada", "eletrizade"],
+    "raiva": ["raiva", "odio", "furioso", "furiosa", "furiose", "bravo", "brava", "brave", "puto", "puta", "pute", "irritado", "irritada", "irritade", "raiava", "ódio", "furiosu", "bravu", "putu", "irritadu"],
 
-    "raiva": ["raiva", "odio", "furioso", "furiosa", "furiose", "bravo", "brava", "brave", "puto", "puta", "pute", "irritado", "irritada", "irritade"],
+    "confusao": ["confuso", "confusa", "confuse", "desorientado", "desorientada", "desorientade", "perdido", "perdida", "perdide", "atordoado", "atordoada", "atordoade", "confusu", "confuzão", "confusao", "perdidu", "atorduado"],
 
-    "confusao": ["confuso", "confusa", "confuse", "desorientado", "desorientada", "desorientade", "perdido", "perdida", "perdide", "atordoado", "atordoada", "atordoade"],
+    "medo": ["medo", "pavor", "temor", "assustado", "assustada", "assustade", "receio", "ameaca", "vigilante", "acuado", "acuada", "acuade", "medu", "asustado", "asustada", "ameaça", "ameaca", "acuadu"],
 
-    "medo": ["medo", "pavor", "temor", "assustado", "assustada", "assustade", "receio", "ameaca", "vigilante", "acuado", "acuada", "acuade"],
+    "shutdown": ["shutdown", "desligado", "desligada", "desligade", "travado", "travada", "travade", "apagão", "indiferente", "shatdown", "shutdon", "desligadu", "travadu", "apago"],
 
-    "shutdown": ["shutdown", "desligado", "desligada", "desligade", "travado", "travada", "travade", "apagão", "indiferente"],
+    "dissociacao": ["dissociacao", "desconectado", "desconectada", "desconectade", "distante", "mundo de vidro", "fora do corpo", "dissociaçao", "dissociação", "dissoçiaçao", "desconectadu", "disociacao"],
 
-    "dissociacao": ["dissociacao", "desconectado", "desconectada", "desconectade", "distante", "mundo de vidro", "fora do corpo"],
+    "paz": ["paz", "calma", "tranquilo", "tranquila", "tranquile", "sereno", "serena", "serene", "leve", "relaxado", "relaxada", "relaxade", "pas", "tranquilu", "trankilo", "relaxadu"],
 
-    "paz": ["paz", "calma", "tranquilo", "tranquila", "tranquile", "sereno", "serena", "serene", "leve", "relaxado", "relaxada", "relaxade"],
+    "vergonha": ["vergonha", "envergonhado", "envergonhada", "envergonhade", "timidez", "humilhacao", "exposto", "exposta", "exposte", "culpa", "vergonha", "vergonha", "umilhaçao", "umilhação", "culpado", "culpada"],
 
-    "vergonha": ["vergonha", "envergonhado", "envergonhada", "envergonhade", "timidez", "humilhacao", "exposto", "exposta", "exposte","culpa"],
+    "tedio": ["tedio", "entediado", "entediada", "entediade", "subestimulado", "subestimulada", "subestimulade", "desinteresse", "tédio", "entediadu", "subestimuladu"],
 
-    "tedio": ["tedio", "entediado", "entediada", "entediade", "subestimulado", "subestimulada", "subestimulade", "desinteresse"],
+    "vergonha_alheia": ["vergonha alheia", "constrangimento", "desconforto social", "mico alheio", "vergonha aleia", "constrangimentu"],
 
-    "vergonha_alheia": ["vergonha alheia", "constrangimento", "desconforto social", "mico alheio"],
+    "fome": ["fome", "faminto", "faminta", "faminte", "esfomeado", "esfomeada", "esfomeade", "vazio no estomago", "fomi", "famintu", "esfomeadu", "vazio no estomagu"],
 
-    "fome": ["fome", "faminto", "faminta", "faminte", "esfomeado", "esfomeada", "esfomeade", "vazio no estomago"],
+    "sede": ["sede", "sedento", "sedenta", "sedente", "desidratado", "desidratada", "desidratade", "boca seca", "sedi", "sedentu", "desidratadu"],
 
-    "sede": ["sede", "sedento", "sedenta", "sedente", "desidratado", "desidratada", "desidratade", "boca seca"],
+    "sono": ["sono", "sonolento", "sonolenta", "sonolente", "cansaco", "exausto", "exausta", "exhauste", "esgotado", "esgotada", "esgotade", "sonu", "cansaço", "cansaco", "exaustu", "esgotadu"],
 
-    "sono": ["sono", "sonolento", "sonolenta", "sonolente", "cansaco", "exausto", "exausta", "exhauste", "esgotado", "esgotada", "esgotade"],
+    "meltdown": ["meltdown", "explosao", "descontrole", "crise sensorial", "sobrecarga extrema", "meltdon", "explosão", "explosao", "descontroli"],
 
-    "meltdown": ["meltdown", "explosao", "descontrole", "crise sensorial", "sobrecarga extrema"],
+    "injustica": ["injustica", "revoltado", "revoltada", "revoltade", "indignado", "indignada", "indignade", "angustia etica", "injustiça", "injustiça", "revoltadu", "indignadu"],
 
-    "injustica": ["injustica", "revoltado", "revoltada", "revoltade", "indignado", "indignada", "indignade", "angustia etica"],
+    "solidao": ["solidao", "sozinho", "sozinha", "sozinhe", "isolado", "isolada", "isolade", "invisivel", "solidão", "solidao", "sozinhu", "isoladu", "invizivel"],
 
-    "solidao": ["solidao", "sozinho", "sozinha", "sozinhe", "isolado", "isolada", "isolade", "invisivel"],
+    "nao_verbal": ["nao verbal", "mudo", "muda", "mude", "sem fala", "silencioso", "silenciosa", "silenciose", "dificuldade em falar", "não verbal", "nao verbal", "muditu", "silenciosu"],
 
-    "nao_verbal": ["nao verbal", "mudo", "muda", "mude", "sem fala", "silencioso", "silenciosa", "silenciose", "dificuldade em falar"],
+    "orgulho": ["orgulho", "orgulhoso", "orgulhosa", "orgulhose", "capaz", "vitorioso", "vitoriosa", "vitoriose", "realizado", "realizada", "realizade", "orgulhu", "orgulhosu", "vitoriosu", "realizadu"],
 
-    "orgulho": ["orgulho", "orgulhoso", "orgulhosa", "orgulhose", "capaz", "vitorioso", "vitoriosa", "vitoriose", "realizado", "realizada", "realizade"],
+    "gratidao": ["gratidao", "grato", "grata", "grate", "agradecido", "agradecida", "agradecide", "gratidão", "gratidao", "agradeçidu", "agradecido"],
 
-    "gratidao": ["gratidao", "grato", "grata", "grate", "agradecido", "agradecida", "agradecide"],
+    "ecolalia": ["ecolalia", "looping", "ruminacao", "repetitivo", "repetitiva", "repetitive", "frase na cabeca", "mente presa", "ecolalia", "ruminaçao", "ruminação", "repetitivu", "cabeça"],
 
-    "ecolalia": ["ecolalia", "looping", "ruminacao", "repetitivo", "repetitiva", "repetitive", "frase na cabeca", "mente presa"],
+    "mal_estar": ["mal estar", "indisposto", "indisposta", "indisposte", "enjoado", "enjoada", "enjoade", "nausea", "mal estar", "indispostu", "enjoadu", "náusea"],
 
-    "mal_estar": ["mal estar", "indisposto", "indisposta", "indisposte", "enjoado", "enjoada", "enjoade", "nausea"],
+    "dor_de_cabeca": ["dor de cabeca", "enxaqueca", "cefaleia", "pressao na cabeca", "dor de cabeça", "enxaqueca", "preçao na cabeça"],
 
-    "dor_de_cabeca": ["dor de cabeca", "enxaqueca", "cefaleia", "pressao na cabeca"],
+    "alivio": ["alivio", "descarregado", "descarregada", "descarregade", "concluido", "concluida", "concluide", "descanso", "alívio", "alivio", "concluidu", "descarregadu"],
 
-    "alivio": ["alivio", "descarregado", "descarregada", "descarregade", "concluido", "concluida", "concluide", "descanso"],
+    "nojo": ["nojo", "aversao", "repulsa", "enojado", "enojada", "enojade", "asco", "noju", "averçao", "aversão", "enojadu"],
 
-    "nojo": ["nojo", "aversao", "repulsa", "enojado", "enojada", "enojade", "asco"],
+    "curiosidade": ["curiosidade", "interessado", "interessada", "interessade", "curioso", "curiosa", "curiose", "investigativo", "curiosidadi", "interessadu", "curiosu"],
 
-    "curiosidade": ["curiosidade", "interessado", "interessada", "interessade", "curioso", "curiosa", "curiose", "investigativo"],
+    "stimming": ["stimming", "autorregulacao", "estimulacao", "balanco", "movimento repetitivo", "agito", "estimulaçao", "estimulação", "balanço", "balanço"],
 
-    "stimming": ["stimming", "autorregulacao", "estimulacao", "balanco", "movimento repetitivo", "agito"],
+    "alegria": ["alegria", "felicidade", "feliz", "feliza", "felize", "contente", "euforico", "euforica", "euforice", "radiante", "alegria", "feliçidade", "eufórico", "radianti"],
 
-    "alegria": ["alegria", "felicidade","feliz", "feliza", "felize", "contente", "contente", "contente", "euforico", "euforica", "euforice", "radiante"],
-
-    "luto": ["luto", "perda", "tristeza profunda", "choro", "sofrimento", "processando a perda"]
+    "luto": ["luto", "perda", "tristeza profunda", "choro", "sofrimento", "processando a perda", "lutu", "perda", "tristesa"]
+}
     
-    }
+    
     salvar_banco(banco_inicial)
     return banco_inicial
 

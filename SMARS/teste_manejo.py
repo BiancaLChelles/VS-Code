@@ -291,7 +291,7 @@ def processar_final(entrada_usuario, tipo_fluxo):
         # --- CAMINHO A: IDENTIFICAÇÃO DIRETA ---
         if tipo_fluxo == "direto":
             
-            sentimento_final = entrada_usuario
+            sentimento_final = entrada_usuario.strip().lower()
             dialog = ctk.CTkInputDialog(text="Intensidade (1 a 10):", title="INTENSIDADE")
             dialog.geometry(f"+{int(dialog.winfo_screenwidth()/2 - 150)}+{int(dialog.winfo_screenheight()/2 - 100)}")
             int_input= dialog.get_input()
@@ -314,10 +314,10 @@ def processar_final(entrada_usuario, tipo_fluxo):
         elif tipo_fluxo == "fisico":
         # 1. O SISTEMA ACESSA OS SENSORES HARDWARE
         # O detectado_bruto já vem limpo (ex: "fome" ou "sono_exaustao")
+            sentimento_final = str(detectado_bruto).strip()
+
             detectado_bruto = varredura_fisica.tradutor_fisico(entrada_usuario)
         
-        # REMOVA O .UPPER()! Queremos manter o texto limpo para a ponte.
-        sentimento_final = str(detectado_bruto).strip() 
 
         intensidade = 7  
         identifica = False

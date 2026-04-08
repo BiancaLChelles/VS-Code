@@ -3,8 +3,8 @@
 
 import customtkinter as ctk # Importa a biblioteca para o visual moderno e Modo Escuro
 from datetime import datetime # Importa funções para ler a hora atual do seu computador
-import varredura_fisica # Importa o seu módulo que traduz sensações do corpo
-import dicionario # Importa o seu módulo com o banco de dados de sentimentos
+import varredura_fisica # Importa o módulo que traduz sensações do corpo
+import dicionario # Importa o módulo com o banco de dados de sentimentos
 import sqlite3
 from datetime import datetime, timedelta
 import motor_logico  # Importa o arquivo de manejo
@@ -37,10 +37,10 @@ def abrir_contato():
 
     # Título
     ctk.CTkLabel(janela_contato, text="CENTRAL DE SUPORTE", 
-                 font=("Segoe UI", 20, "bold"), text_color="#1f538d").pack(pady=(30, 5))
+                 font=("Segoe UI", 22, "bold"), text_color="#1f538d").pack(pady=(30, 5))
     
-    ctk.CTkLabel(janela_contato, text="BUGS, SUGESTÕES, NOVOS CASOS OU DÚVIDAS OPERACIONAIS", 
-                 font=("Segoe UI", 12), text_color="gray").pack(pady=(0, 20))
+    ctk.CTkLabel(janela_contato, text="EM CASO DE BUGS, SUGESTÕES, NOVOS CASOS OU DÚVIDAS OPERACIONAIS", 
+                 font=("Segoe UI", 13), text_color="#82abda").pack(pady=(0, 20))
 
     # Frame Central
     info_frame = ctk.CTkFrame(janela_contato, fg_color="#242424", border_color="#1f538d", border_width=1)
@@ -48,8 +48,8 @@ def abrir_contato():
 
     email_suporte = "SMARS.contato@outlook.com" # <--- e-mail aqui
 
-    ctk.CTkLabel(info_frame, text="E-MAIL OFICIAL:", 
-                 font=("Segoe UI", 11, "bold"), text_color="#5c9ae0").pack(pady=(15, 5))
+    ctk.CTkLabel(info_frame, text="ENTRE EM CONTATO CONOSCO", 
+                 font=("Segoe UI", 14, "bold"), text_color="#5c9ae0").pack(pady=(15, 5))
 
     # Campo de exibição do e-mail
     display_email = ctk.CTkEntry(info_frame, width=300, height=35, justify="center",
@@ -76,7 +76,7 @@ def abrir_contato():
 
     # Rodapé informativo
     ctk.CTkLabel(janela_contato, text="Tempo de resposta de até 3 dias úteis.", 
-                 font=("Segoe UI", 15, "italic"), text_color="#555").pack(pady=(15,0))
+                 font=("Segoe UI", 15, "italic"), text_color="#82abda").pack(pady=(15,0))
 
     # Botão Sair
     ctk.CTkButton(janela_contato, text="VOLTAR", font=("Segoe UI", 13, "bold"),
