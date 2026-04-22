@@ -39,7 +39,7 @@ def abrir_contato():
     ctk.CTkLabel(janela_contato, text="CENTRAL DE SUPORTE", 
                  font=("Segoe UI", 22, "bold"), text_color="#1f538d").pack(pady=(30, 5))
     
-    ctk.CTkLabel(janela_contato, text="EM CASO DE BUGS, SUGESTÕES, NOVOS CASOS OU DÚVIDAS OPERACIONAIS", 
+    ctk.CTkLabel(janela_contato, text="EM CASO DE BUGS, SUGESTÕES, NOVOS CASOS OU DÚVIDAS.", 
                  font=("Segoe UI", 13), text_color="#82abda").pack(pady=(0, 20))
 
     # Frame Central
