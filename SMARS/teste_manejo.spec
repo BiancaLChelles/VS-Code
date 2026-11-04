@@ -5,7 +5,7 @@ a = Analysis(
     ['teste_manejo.py'],
     pathex=[],
     binaries=[],
-    datas=[],
+    datas=[('C:/Users/LENOVO/AppData/Roaming/uv/python/cpython-3.15.2-windows-x86_64-none/Lib/site-packages/customtkinter', 'customtkinter')],
     hiddenimports=[],
     hookspath=[],
     hooksconfig={},

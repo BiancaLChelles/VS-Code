@@ -14,7 +14,7 @@ def obter_relatorio(cat_match, intensidade, hora_atual_str):
         h = datetime.now().hour
     hora_atual = h
     
-      # --- SEUS TEXTOS E REGRAS ORIGINAIS (MANTIDOS 100% INTACTOS) ---
+      
     madrugada = (0 <= hora_atual <= 5)
     tardeNoite = (18 <= hora_atual <= 23)
     hora_refeicao = (7 <= hora_atual <= 9) or (11 <= hora_atual <= 14) or (18 <= hora_atual <= 21)
